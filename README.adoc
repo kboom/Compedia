@@ -1,0 +1,12 @@
+:toc: preamble
+
+:page-architecture: link:./Docs/Architecture.adoc[Architecture]
+
+= Compedia
+
+Your library or the commands you find the most useful.
+
+== Architecture
+
+This is a typical microservice architecture.
+You can read about it in-depth on {page-architecture} page.
