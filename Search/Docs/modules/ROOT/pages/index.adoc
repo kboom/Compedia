@@ -1,0 +1,3 @@
+= Parser Service
+
+Parser service reads definition files from GitHub and converts them to the format other components understand.

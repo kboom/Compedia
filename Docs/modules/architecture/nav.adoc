@@ -1,2 +1,2 @@
-* xref:index.adoc[Architecture]
-* xref:responsibilities.adoc[Responsibilities]
+.Architecture
+* xref:index.adoc[Overview]

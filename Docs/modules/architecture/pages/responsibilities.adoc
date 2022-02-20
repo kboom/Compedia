@@ -1,5 +1,0 @@
-= Compedia: Architecture
-
-:toc: preamble
-:description: What are the responsibilities
-:page-tags: architecture, diagrams

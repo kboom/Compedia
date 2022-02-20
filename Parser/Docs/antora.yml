@@ -1,5 +1,6 @@
-name: compedia
-title: Compedia Docs
+# prettier-ignore
+name: compedia-parser-service
+title: Compedia Parser Service
 version: 0.0.1
 nav:
-  - modules/ROOT/nav.adoc
+- modules/ROOT/nav.adoc

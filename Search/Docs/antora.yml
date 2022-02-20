@@ -1,5 +1,7 @@
-name: compedia
-title: Compedia Docs
+# prettier-ignore
+name: compedia-search-service
+title: Compedia Search Service
 version: 0.0.1
 nav:
-  - modules/ROOT/nav.adoc
+- modules/ROOT/nav.adoc
+- modules/contracts/nav.adoc
