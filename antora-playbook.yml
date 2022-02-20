@@ -1,6 +1,7 @@
 site:
   title: Compedia
-  url: https://github.com/kboom/Compedia
+  url: https://kboom.github.io/Compedia/
+  start_page: compedia::index.adoc
 content:
   sources:
     - url: ./
