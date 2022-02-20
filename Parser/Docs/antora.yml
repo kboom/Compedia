@@ -4,3 +4,4 @@ title: Compedia Parser Service
 version: 0.0.1
 nav:
 - modules/ROOT/nav.adoc
+- modules/contracts/nav.adoc

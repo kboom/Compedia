@@ -1,6 +1,12 @@
 .Introduction
 * xref:index.adoc[Home]
 
+.Showcase
+* xref:showcase:index.adoc[Overview]
+
+.Architecture
+* xref:architecture:index.adoc[Overview]
+
 .Services
 * xref:compedia-parser-service::index.adoc[Parser service]
 * xref:compedia-search-service::index.adoc[Search service]

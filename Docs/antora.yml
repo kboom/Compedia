@@ -4,5 +4,3 @@ title: Compedia Docs
 version: 0.0.1
 nav:
 - modules/ROOT/nav.adoc
-- modules/showcase/nav.adoc
-- modules/architecture/nav.adoc
