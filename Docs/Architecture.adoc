@@ -1,0 +1,75 @@
+:toc: preamble
+
+= Compedia: Architecture
+
+This software follows a classic Microservice architecture.
+
+== Overview
+
+=== Context Diagram
+
+[plantuml]
+----
+!include C4_Context.puml
+
+Person(user, "User", "Wants to catalog and search for personalized commands.")
+System(Compedia, "Compedia", "Your library or the commands you find the most useful.")
+System_Ext(GitHub, "GitHub", "Command definitions stored in textual Compedia definition files.")
+
+Rel(user, Compedia, "Uses commands")
+Rel(user, GitHub, "Maintains version-controlled definitions")
+Rel(Compedia, GitHub, "Loads definitions")
+Rel(GitHub, Compedia, "Hits webhook on repository change")
+----
+
+=== Container Diagram
+
+[plantuml]
+----
+!include C4_Container.puml
+
+Person(user, "User", "Wants to catalog and search for personalized commands.")
+System_Ext(GitHub, "GitHub", "Command definitions stored in textual Compedia definition files.")
+
+System_Boundary(c1, "Compedia") {
+    Container(web_app, "Web Application", ".NET CORE, React", "Provides SPA and an API for it.")
+
+    Container(search_service, "Search Service", ".NET CORE", "Provides API for searching commands.", $sprite="react")
+    ContainerDb(search_db, "Database", "Microsoft SQL", "Holds commands")
+
+    ContainerQueue(definitions_queue, "Definitions queue", "Kafka", "Decouples search and parser")
+
+    ContainerQueue(user_queue, "Users queue", "Kafka", "Decouples user and others")
+
+    Container(parser_service, "Parser Service", ".NET CORE", "Parses definitions into format readable by search.")
+
+    Container(token_service, "Token Service", ".NET CORE, React", "OAuth2 server for service to service and user authentication. Ships with SPA for that purpose.")
+    ContainerDb(token_db, "Token Database", "Microsoft SQL", "Holds tokens", $sprite="msql_server")
+
+    Container(user_service, "User Service", ".NET CORE", "Maintains user accounts.")
+    ContainerDb(user_db, "User Database", "Microsoft SQL", "Holds account data.", $sprite="msql_server")
+}
+
+Rel(user, web_app, "Interacts with")
+Rel(user, token_service, "Signs in with")
+Rel(user, GitHub, "Maintains version-controlled definitions")
+
+Rel(GitHub, parser_service, "Hits webhook on repository change")
+
+Rel(web_app, search_service, "Uses", "HTTPS/JSON")
+Rel(web_app, token_service, "Uses", "HTTPS/JSON")
+Rel(web_app, user_service, "Uses", "HTTPS/JSON")
+
+Rel(token_service, user_service, "Uses", "HTTPS/JSON")
+Rel(token_service, token_db, "Maintains")
+
+Rel(user_service, user_db, "Maintains")
+Rel(user_service, user_queue, "Produces", "AVRO")
+
+Rel(parser_service, GitHub, "Loads definitions")
+Rel(parser_service, definitions_queue, "Produces", "AVRO")
+Rel(parser_service, user_queue, "Consumes", "AVRO")
+
+Rel(search_service, search_db, "Maintains")
+Rel(search_service, definitions_queue, "Consumes", "AVRO")
+----
