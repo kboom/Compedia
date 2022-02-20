@@ -35,7 +35,7 @@ System_Boundary(c1, "Compedia") {
     Container(web_app, "Web Application", ".NET CORE, React", "Provides SPA and an API for it.")
 
     Container(search_service, "Search Service", ".NET CORE", "Provides API for searching commands.", $sprite="react")
-    ContainerDb(search_db, "Database", "Microsoft SQL", "Holds commands")
+    ContainerDb(search_db, "Search DB", "ElasticSearch", "Stores read-optimized views on commands")
 
     ContainerQueue(definitions_queue, "Definitions queue", "Kafka", "Decouples search and parser")
 
@@ -44,10 +44,10 @@ System_Boundary(c1, "Compedia") {
     Container(parser_service, "Parser Service", ".NET CORE", "Parses definitions into format readable by search.")
 
     Container(token_service, "Token Service", ".NET CORE, React", "OAuth2 server for service to service and user authentication. Ships with SPA for that purpose.")
-    ContainerDb(token_db, "Token Database", "Microsoft SQL", "Holds tokens", $sprite="msql_server")
+    ContainerDb(token_db, "Token DB", "Microsoft SQL", "Holds tokens", $sprite="msql_server")
 
     Container(user_service, "User Service", ".NET CORE", "Maintains user accounts.")
-    ContainerDb(user_db, "User Database", "Microsoft SQL", "Holds account data.", $sprite="msql_server")
+    ContainerDb(user_db, "User DB", "Microsoft SQL", "Holds account data.", $sprite="msql_server")
 }
 
 Rel(user, web_app, "Interacts with")

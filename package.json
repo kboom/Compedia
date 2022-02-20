@@ -1,0 +1,16 @@
+{
+  "name": "compedia-docs",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "antora generate antora-playbook.js"
+  },
+  "author": "Grzegorz Gurgul",
+  "license": "MIT",
+  "devDependencies": {
+    "@antora/cli": "3.0.1",
+    "@antora/site-generator": "3.0.1",
+    "asciidoctor": "^2.2.6",
+    "asciidoctor-kroki": "^0.15.4"
+  }
+}

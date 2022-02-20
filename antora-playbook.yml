@@ -1,0 +1,17 @@
+site:
+  title: Compedia
+  url: https://github.com/kboom/Compedia
+content:
+  sources:
+    - url: ./
+      branches: HEAD
+      start_paths:
+        - Docs # https://docs.antora.org/antora/latest/playbook/content-source-start-paths/ can support globs
+ui:
+  bundle:
+    url: https://github.com/vshn/antora-ui-default/releases/download/2.0.15/ui-bundle.zip
+asciidoc:
+  extensions:
+    - asciidoctor-kroki
+output:
+  dir: ./public
