@@ -10,12 +10,7 @@ content:
         - Docs # https://docs.antora.org/antora/latest/playbook/content-source-start-paths/ can support globs
         - ./*/Docs
 ui:
-  supplemental_files:
-    - path: ui.yml
-      contents: |
-        static_files:
-        - .nojekyll
-    - path: .nojekyll
+  supplemental_files: ./Docs/ui
   bundle:
     url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
 asciidoc:

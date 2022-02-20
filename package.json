@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "start": "npm run build && npm run serve",
-    "start:watch": "npm run start && nodemon -e adoc --watch Docs --watch */Docs --exec npm build",
+    "start:watch": "concurrently \"npm run start\" \"nodemon -e adoc,yml,hbs --watch antora-playbook.yml --watch Docs --watch */Docs --exec npm run build\"",
     "build": "antora antora-playbook.yml",
     "serve": "http-server ./.public -c-1 -o /compedia/0.0.1/index.html"
   },
