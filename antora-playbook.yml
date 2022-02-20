@@ -7,11 +7,20 @@ content:
       branches: HEAD
       start_paths:
         - Docs # https://docs.antora.org/antora/latest/playbook/content-source-start-paths/ can support globs
+        - ./*/Docs
 ui:
+  supplemental_files:
+    - path: ui.yml
+      contents: |
+        static_files:
+        - .nojekyll
+    - path: .nojekyll
   bundle:
-    url: https://github.com/vshn/antora-ui-default/releases/download/2.0.15/ui-bundle.zip
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
 asciidoc:
+  attributes:
+    kroki-fetch-diagram: true
   extensions:
     - asciidoctor-kroki
 output:
-  dir: ./public
+  dir: .public

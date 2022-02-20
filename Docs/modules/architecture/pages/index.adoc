@@ -1,8 +1,8 @@
-:toc: preamble
-
 = Compedia: Architecture
 
-This software follows a classic Microservice architecture.
+:toc: preamble
+:description: This software follows a classic Microservice architecture.
+:page-tags: architecture, diagrams
 
 == Overview
 
@@ -26,7 +26,7 @@ Rel(GitHub, Compedia, "Hits webhook on repository change")
 
 [plantuml]
 ----
-!include C4_Container.puml
+!include C4_Component.puml
 
 Person(user, "User", "Wants to catalog and search for personalized commands.")
 System_Ext(GitHub, "GitHub", "Command definitions stored in textual Compedia definition files.")

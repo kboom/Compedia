@@ -3,14 +3,22 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "antora generate antora-playbook.js"
+    "start": "npm run build && npm run serve",
+    "start:watch": "npm run start && nodemon -e adoc --watch Docs --watch */Docs --exec npm build",
+    "build": "antora antora-playbook.yml",
+    "serve": "http-server ./.public -c-1 -o /compedia/0.0.1/index.html"
   },
   "author": "Grzegorz Gurgul",
   "license": "MIT",
+  "nodemonConfig": {
+    "delay": 2500
+  },
   "devDependencies": {
     "@antora/cli": "3.0.1",
     "@antora/site-generator": "3.0.1",
     "asciidoctor": "^2.2.6",
-    "asciidoctor-kroki": "^0.15.4"
+    "asciidoctor-kroki": "^0.15.4",
+    "concurrently": "^7.0.0",
+    "nodemon": "^2.0.15"
   }
 }
