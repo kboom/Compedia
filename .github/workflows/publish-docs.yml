@@ -12,10 +12,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 17
-      - name: npm install and npm test
+      - name: Install dependencies
         run: npm install
       - name: Generate docs
-        run: npm build
+        run: npm run build
       - name: Publish to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
