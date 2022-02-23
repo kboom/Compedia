@@ -12,16 +12,7 @@ builder.Services.AddAuthentication(options =>
     options.DefaultScheme = "Cookies";
     options.DefaultChallengeScheme = "oidc";
 })
-.AddCookie("Cookies", options =>
-{
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
-    options.SlidingExpiration = true;
-    options.Cookie.HttpOnly = true;
-    //options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-    options.Cookie.SameSite = SameSiteMode.Lax;
-    options.Cookie.Name = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.LoginPath = "/Login";
-})
+.AddCookie("Cookies")
 .AddOpenIdConnect("oidc", options =>
 {
     options.Authority = "https://localhost:7080";

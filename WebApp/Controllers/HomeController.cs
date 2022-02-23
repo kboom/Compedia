@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using MvcClient.Models;
+using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 using System.Net.Http.Headers;
-using System.Security.Claims;
 
 namespace MvcClient.Controllers
 {
@@ -15,23 +16,32 @@ namespace MvcClient.Controllers
             _logger = logger;
         }
 
-        [Route("/user-action")]
-        public async Task<IActionResult> Home()
+        public IActionResult Index()
+        {
+            return View();
+        }
+        
+        public async Task<IActionResult> CallApi()
         {
             var accessToken = await HttpContext.GetTokenAsync("access_token");
-            _logger.LogError($"access token {accessToken}");
 
-            // make call to an internal service secured with access token
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             var content = await client.GetStringAsync("https://localhost:7007/identity");
 
-            return Ok(content);
+            ViewBag.Json = JArray.Parse(content).ToString();
+            return View("json");
         }
 
         public IActionResult Logout()
         {
             return SignOut("Cookies", "oidc");
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
