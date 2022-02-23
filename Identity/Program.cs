@@ -2,16 +2,13 @@
 // and here https://github.com/IdentityServer/IdentityServer4/tree/main/samples/Quickstarts
 
 using Compedia.Identity.Services;
-using Compedia.Identity.Stores;
 using dotenv.net;
 using IdentityServer4;
-using IdentityServer4.Stores;
 using IdentityServerAspNetIdentity;
 using IdentityServerAspNetIdentity.Data;
 using IdentityServerAspNetIdentity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -78,23 +75,6 @@ builder.Services.AddAuthentication()
 
         options.ClientId = envVars["google.ClientId"];
         options.ClientSecret = envVars["google.ClientSecret"];
-    })
-    .AddOpenIdConnect("oidc", "Demo IdentityServer", options =>
-    {
-        options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-        options.SignOutScheme = IdentityServerConstants.SignoutScheme;
-        options.SaveTokens = true;
-
-        options.Authority = "https://demo.identityserver.io/";
-        options.ClientId = "interactive.confidential";
-        options.ClientSecret = "secret";
-        options.ResponseType = "code";
-
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            NameClaimType = "name",
-            RoleClaimType = "role"
-        };
     });
 
 var app = builder.Build();
