@@ -6,8 +6,6 @@ using Compedia.Identity.Controllers;
 using Compedia.Identity.Infrastructure.Logging;
 using Compedia.Identity.Infrastructure.Persistence;
 using Compedia.Libs.LanguageExtensions;
-using IdentityServerAspNetIdentity;
-using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,21 +14,13 @@ Action<WebApplication>[] actions = {
 	builder.ConfigureLogging(),
 	builder.ConfigurePersistence(),
 	builder.ConfigureIdentityServer(),
-	builder.ConfigureControllers()
+	builder.ConfigureControllers(),
+	builder.ConfigureHealth()
 };
 
 var app = builder.Build();
 
 actions.Consume(app);
-
-try
-{
-    seedDatabase();
-} catch (Exception ex)
-{
-    Log.Fatal(ex, "Could not seed database.");
-    return 1;
-}
 
 try
 {
@@ -46,13 +36,4 @@ catch (Exception ex)
 finally
 {
     Log.CloseAndFlush();
-}
-
-void seedDatabase()
-{
-    Log.Information("Seeding database...");
-    var config = app.Services.GetRequiredService<IConfiguration>();
-    var connectionString = config.GetConnectionString("DefaultConnection");
-    SeedData.EnsureSeedData(connectionString);
-    Log.Information("Done seeding database.");
 }
