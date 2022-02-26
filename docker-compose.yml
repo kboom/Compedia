@@ -14,3 +14,17 @@ services:
     environment:
       - "SA_PASSWORD=Your_password123"
       - "ACCEPT_EULA=Y"
+
+  search:
+    image: ${DOCKER_REGISTRY-}compedia_search
+    depends_on:
+    - identity
+    build:
+      context: .
+      dockerfile: Search\Dockerfile
+
+  webapp:
+    image: ${DOCKER_REGISTRY-}compedia_webapp
+    build:
+      context: .
+      dockerfile: Webapp\Dockerfile

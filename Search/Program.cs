@@ -17,14 +17,11 @@ builder.Services.AddAuthentication("Bearer")
     });
 
 // adds an authorization policy to make sure the token is for scope 'api1'
-builder.Services.AddAuthorization(options =>
+builder.Services.AddAuthorization(options => options.AddPolicy("ApiScope", policy =>
 {
-    options.AddPolicy("ApiScope", policy =>
-    {
-        policy.RequireAuthenticatedUser();
-        policy.RequireClaim("scope", "api1");
-    });
-});
+	policy.RequireAuthenticatedUser();
+	policy.RequireClaim("scope", "api1");
+}));
 
 var app = builder.Build();
 
@@ -33,10 +30,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers()
-        .RequireAuthorization("ApiScope");
-});
+app.UseEndpoints(endpoints => endpoints.MapControllers()
+				.RequireAuthorization("ApiScope"));
 
 app.Run();
