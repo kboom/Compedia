@@ -8,9 +8,9 @@ using Serilog;
 
 namespace Compedia.Identity.Infrastructure.Persistence.SeedData;
 
-public static class DataSeed
+public static class UserData
 {
-	public static void SeedDataInto(this WebApplication app)
+	public static void SeedUserDataInto(this WebApplication app)
 	{
 		using var scope = app.Services.CreateScope();
 		var services = scope.ServiceProvider;

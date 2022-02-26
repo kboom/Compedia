@@ -1,6 +1,5 @@
-using Compedia.WebApp;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using System.IdentityModel.Tokens.Jwt;
+using Compedia.WebApp;
 
 var builder = WebApplication.CreateBuilder(args);
 

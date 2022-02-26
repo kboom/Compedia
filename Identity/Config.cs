@@ -36,8 +36,8 @@ public static class Config
             // interactive ASP.NET Core MVC client
             new Client
             {
-                ClientId = "mvc",
-                ClientSecrets = { new Secret("secret".Sha256()) },
+                ClientId = "clientId",
+                ClientSecrets = { new Secret("clientSecret".Sha256()) },
 
                 AllowedGrantTypes = GrantTypes.Code,
                     

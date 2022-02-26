@@ -1,10 +1,9 @@
 ﻿using Compedia.Identity.Services;
-using Compedia.Identity.Stores;
 using IdentityServer4;
-using IdentityServerAspNetIdentity;
 using IdentityServerAspNetIdentity.Data;
 using IdentityServerAspNetIdentity.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Compedia.Identity;
 
@@ -12,8 +11,10 @@ public static class IdentityServerConfig
 {
 	public static Action<WebApplication> ConfigureIdentityServer(this WebApplicationBuilder builder)
 	{
-		builder.Services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser> , AppClaimsPrincipalFactory>();
-		builder.Services.AddScoped<ClientStore>();
+		builder.Services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, AppClaimsPrincipalFactory>();
+
+		var configurationConnection = builder.Configuration.GetConnectionString("ConfigurationDbConnection");
+		var migrationsAssembly = typeof(ApplicationDbContext).Assembly.FullName;
 
 		builder.Services.AddIdentityServer(options =>
 		{
@@ -24,12 +25,17 @@ public static class IdentityServerConfig
 			options.EmitStaticAudienceClaim = true;
 		})
 				.AddDeveloperSigningCredential() // disable in production
-				.AddInMemoryIdentityResources(Config.IdentityResources)
-				.AddInMemoryApiScopes(Config.ApiScopes)
-				.AddClientStore<ClientStore>()
+				.AddConfigurationStore(options => options.ConfigureDbContext = b => b.UseSqlServer(
+					configurationConnection,
+					sql => sql.MigrationsAssembly(migrationsAssembly)
+				))
+				.AddOperationalStore(options => options.ConfigureDbContext = b => b.UseSqlServer(
+					configurationConnection,
+					sql => sql.MigrationsAssembly(migrationsAssembly)
+				))
 				.AddAspNetIdentity<ApplicationUser>();
 
-		builder.Services.AddIdentity<ApplicationUser , IdentityRole>()
+		builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 				.AddEntityFrameworkStores<ApplicationDbContext>()
 				.AddDefaultTokenProviders();
 
@@ -38,20 +44,16 @@ public static class IdentityServerConfig
 		builder.Services.Configure<GoogleIdentityProviderSettings>(identityProviderGoogleSection);
 
 		builder.Services.AddAuthentication()
-			.AddGoogle("Google" , options =>
-			{
-				options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+			.AddGoogle("Google", options =>
+		 {
+			 options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
 
-				var googleIdentityProviderSettings = identityProviderGoogleSection
-			.Get<GoogleIdentityProviderSettings>();
+			 var googleIdentityProviderSettings = identityProviderGoogleSection
+		 .Get<GoogleIdentityProviderSettings>();
 
-				options.ClientId = googleIdentityProviderSettings.ClientId;
-				options.ClientSecret = googleIdentityProviderSettings.ClientSecret;
-			});
-
-		
-// builder.Services.AddScoped<IClientStore, ClientStore>(); // use this in production
-
+			 options.ClientId = googleIdentityProviderSettings.ClientId;
+			 options.ClientSecret = googleIdentityProviderSettings.ClientSecret;
+		 });
 
 		return app => app.UseIdentityServer();
 	}

@@ -7,8 +7,6 @@ namespace IdentityServerAspNetIdentity.Data;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
-	public DbSet<Client> Clients => Set<Client>();
-
 	public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
