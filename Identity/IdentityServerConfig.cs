@@ -1,4 +1,5 @@
 ﻿using Compedia.Identity.Services;
+using Compedia.Identity.Stores;
 using IdentityServer4;
 using IdentityServerAspNetIdentity;
 using IdentityServerAspNetIdentity.Data;
@@ -12,6 +13,7 @@ public static class IdentityServerConfig
 	public static Action<WebApplication> ConfigureIdentityServer(this WebApplicationBuilder builder)
 	{
 		builder.Services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser> , AppClaimsPrincipalFactory>();
+		builder.Services.AddScoped<ClientStore>();
 
 		builder.Services.AddIdentityServer(options =>
 		{
@@ -24,7 +26,7 @@ public static class IdentityServerConfig
 				.AddDeveloperSigningCredential() // disable in production
 				.AddInMemoryIdentityResources(Config.IdentityResources)
 				.AddInMemoryApiScopes(Config.ApiScopes)
-				.AddInMemoryClients(Config.Clients)
+				.AddClientStore<ClientStore>()
 				.AddAspNetIdentity<ApplicationUser>();
 
 		builder.Services.AddIdentity<ApplicationUser , IdentityRole>()
