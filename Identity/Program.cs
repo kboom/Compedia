@@ -2,7 +2,6 @@
 // and here https://github.com/IdentityServer/IdentityServer4/tree/main/samples/Quickstarts
 
 using Compedia.Identity.Services;
-using dotenv.net;
 using IdentityServer4;
 using IdentityServerAspNetIdentity;
 using IdentityServerAspNetIdentity.Data;
@@ -66,15 +65,20 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
-var envVars = DotEnv.Read();
+var identityProviderGoogleSection = builder.Configuration.GetSection("IdentityProviders:Google");
+
+builder.Services.Configure<GoogleIdentityProviderSettings>(identityProviderGoogleSection);
 
 builder.Services.AddAuthentication()
     .AddGoogle("Google", options =>
     {
         options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
 
-        options.ClientId = envVars["google.ClientId"];
-        options.ClientSecret = envVars["google.ClientSecret"];
+		var googleIdentityProviderSettings = identityProviderGoogleSection
+			.Get<GoogleIdentityProviderSettings>();
+
+		options.ClientId = googleIdentityProviderSettings.ClientId;
+        options.ClientSecret = googleIdentityProviderSettings.ClientSecret;
     });
 
 var app = builder.Build();
