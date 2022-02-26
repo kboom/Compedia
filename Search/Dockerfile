@@ -7,17 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["Identity/Identity.csproj", "Identity/"]
-COPY ["Libs/LanguageExtensions/LanguageExtensions.csproj", "Libs/LanguageExtensions/"]
-RUN dotnet restore "Identity/Identity.csproj"
+COPY ["Search/Search.csproj", "Search/"]
+RUN dotnet restore "Search/Search.csproj"
 COPY . .
-WORKDIR "/src/Identity"
-RUN dotnet build "Identity.csproj" -c Release -o /app/build
+WORKDIR "/src/Search"
+RUN dotnet build "Search.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Identity.csproj" -c Release -o /app/publish
+RUN dotnet publish "Search.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Compedia.Identity.dll"]
+ENTRYPOINT ["dotnet", "Compedia.Search.dll"]

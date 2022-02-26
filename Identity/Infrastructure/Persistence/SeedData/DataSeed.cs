@@ -10,7 +10,7 @@ namespace Compedia.Identity.Infrastructure.Persistence.SeedData;
 
 public static class DataSeed
 {
-	public static async void SeedDataInto(this WebApplication app)
+	public static void SeedDataInto(this WebApplication app)
 	{
 		using var scope = app.Services.CreateScope();
 		var services = scope.ServiceProvider;
@@ -37,7 +37,7 @@ public static class DataSeed
 		}
 	}
 
-	private static async void SeedUsers(this UserManager<ApplicationUser> userManager)
+	private static void SeedUsers(this UserManager<ApplicationUser> userManager)
 	{
 		userManager.AddUser("alice", "alice@email.com", "Pass123!", new Claim[]{
 												new Claim(JwtClaimTypes.Name, "Alice Smith"),
@@ -47,7 +47,7 @@ public static class DataSeed
 		});
 	}
 
-	private static async void AddUser(this UserManager<ApplicationUser> userManager, string username, string email, string plainTextPassword, Claim[] claims)
+	private static void AddUser(this UserManager<ApplicationUser> userManager, string username, string email, string plainTextPassword, Claim[] claims)
 	{
 		var user = userManager.FindByNameAsync(username).Result;
 		if(user == null)

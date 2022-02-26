@@ -3,13 +3,14 @@ version: '3.9'
 services:
   identity:
     image: ${DOCKER_REGISTRY-}compedia_identity
+    depends_on:
+    - identity-db
     build:
       context: .
       dockerfile: Identity\Dockerfile
-    environment:
-      "ConnectionStrings__DefaultConnection": Server=db;Database=IdentityDb;User=sa;Password=Your_password123;MultipleActiveResultSets=true
+
   identity-db:
     image: "mcr.microsoft.com/mssql/server"
     environment:
-      - "SA_PASSWORD=Pass123!"
+      - "SA_PASSWORD=Your_password123"
       - "ACCEPT_EULA=Y"
