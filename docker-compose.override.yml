@@ -35,6 +35,7 @@ services:
      - ASPNETCORE_URLS=https://+:443;http://+:80
      - ASPNETCORE_Kestrel__Certificates__Default__Password=Your_password123
      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+     - OidcSettings__AuthorityServerUrl=https://identity
     volumes:
       - ~/.aspnet/https:/https:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro

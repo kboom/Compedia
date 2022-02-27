@@ -1,4 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using Compedia.WebApp;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,8 @@ builder.Services.AddControllersWithViews();
 JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 
 var odicSettings = builder.Configuration.GetSection("OidcSettings").Get<OidcSettings>();
+
+ServicePointManager.ServerCertificateValidationCallback += (o, c, ch, er) => true;
 
 builder.Services.AddAuthentication(options =>
 {

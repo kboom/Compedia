@@ -15,31 +15,35 @@ public static class ConfigData
 		var context = services.GetRequiredService<ConfigurationDbContext>();
 		context.Database.EnsureDeleted();
 		context.Database.Migrate();
-		if(!context.Clients.Any())
-		{
-			foreach(var client in Config.Clients)
-			{
-				context.Clients.Add(client.ToEntity());
-			}
-			context.SaveChanges();
-		}
+		AddClients(context);
+		AddResources(context);
+		AddApiScopes(context);
+	}
 
-		if(!context.IdentityResources.Any())
+	private static void AddApiScopes(ConfigurationDbContext context)
+	{
+		foreach(var resource in Config.ApiScopes)
 		{
-			foreach(var resource in Config.IdentityResources)
-			{
-				context.IdentityResources.Add(resource.ToEntity());
-			}
-			context.SaveChanges();
+			context.ApiScopes.Add(resource.ToEntity());
 		}
+		context.SaveChanges();
+	}
 
-		if(!context.ApiScopes.Any())
+	private static void AddResources(ConfigurationDbContext context)
+	{
+		foreach(var resource in Config.IdentityResources)
 		{
-			foreach(var resource in Config.ApiScopes)
-			{
-				context.ApiScopes.Add(resource.ToEntity());
-			}
-			context.SaveChanges();
+			context.IdentityResources.Add(resource.ToEntity());
 		}
+		context.SaveChanges();
+	}
+
+	private static void AddClients(ConfigurationDbContext context)
+	{
+		foreach(var client in Config.Clients)
+		{
+			context.Clients.Add(client.ToEntity());
+		}
+		context.SaveChanges();
 	}
 }
