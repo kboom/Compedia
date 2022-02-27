@@ -9,7 +9,7 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Password=Your_password123
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=https://+:443
       - Persistence:SeedData=true
     ports:
       - "5080:80"
@@ -21,7 +21,7 @@ services:
   search:
     environment:
      - ASPNETCORE_ENVIRONMENT=Development
-     - ASPNETCORE_URLS=https://+:443;http://+:80
+     - ASPNETCORE_URLS=https://+:443
      - ASPNETCORE_Kestrel__Certificates__Default__Password=Your_password123
      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
     ports:
@@ -33,7 +33,7 @@ services:
   webapp:
     environment:
      - ASPNETCORE_ENVIRONMENT=Development
-     - ASPNETCORE_URLS=https://+:443;http://+:80
+     - ASPNETCORE_URLS=https://+:443
      - ASPNETCORE_Kestrel__Certificates__Default__Password=Your_password123
      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
      - OidcSettings__AuthorityServerUrl=https://identity

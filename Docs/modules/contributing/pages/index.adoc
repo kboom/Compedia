@@ -1,1 +1,2 @@
 * https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-6.0&tabs=windows[How to configure secrets]
+* https://mjarosie.github.io/dev/2020/09/24/running-identityserver4-on-docker-with-https.html[Configure certificates in Docker]
