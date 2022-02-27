@@ -27,11 +27,11 @@ else {
 
 if ($alreadyExistingCertsIdentity.Count -eq 1) {
     Write-Output "Skipping creating Identity Server certificate as it already exists."
-    $identityServerCert = [Microsoft.CertificateServices.Commands.Certificate] $alreadyExistingCertsIdentity[0]
+    $identityCert = [Microsoft.CertificateServices.Commands.Certificate] $alreadyExistingCertsIdentity[0]
 }
 else {
     # Create a SAN cert for both identity-server and localhost.
-    $identityServerCert = New-SelfSignedCertificate -DnsName $identityCNs -Signer $testRootCA -CertStoreLocation Cert:\LocalMachine\My
+    $identityCert = New-SelfSignedCertificate -DnsName $identityCNs -Signer $testRootCA -CertStoreLocation Cert:\LocalMachine\My
 }
 
 if ($alreadyExistingCertsSeach.Count -eq 1) {
@@ -45,7 +45,7 @@ else {
 
 if ($alreadyExistingCertsParser.Count -eq 1) {
     Write-Output "Skipping creating Parser Service certificate as it already exists."
-    $searchCert = [Microsoft.CertificateServices.Commands.Certificate] $alreadyExistingCertsParser[0]
+    $parserCert = [Microsoft.CertificateServices.Commands.Certificate] $alreadyExistingCertsParser[0]
 }
 else {
     # Create a SAN cert for both search service and localhost.
@@ -65,36 +65,28 @@ else {
 $password = ConvertTo-SecureString -String "password" -Force -AsPlainText
 
 $rootCertPathPfx = "Certs"
-$identityCertPath = "Certs/Identity"
-$searchCertPath = "Certs/Search"
-$parserCertPath = "Certs/Parser"
-$webappCertPath = "Certs/WebApp"
 
-[System.IO.Directory]::CreateDirectory($rootCertPathPfx) | Out-Null
-[System.IO.Directory]::CreateDirectory($identityCertPath) | Out-Null
-[System.IO.Directory]::CreateDirectory($searchCertPath) | Out-Null
-[System.IO.Directory]::CreateDirectory($parserCertPath) | Out-Null
-[System.IO.Directory]::CreateDirectory($webappCertPath) | Out-Null
+New-Item -ItemType Directory -Path $rootCertPathPfx -Force | Out-Null
 
 Export-PfxCertificate -Cert $testRootCA -FilePath "$rootCertPathPfx/aspnetapp-root-cert.pfx" -Password $password | Out-Null
-Export-PfxCertificate -Cert $identityServerCert -FilePath "$identityCertPath/aspnetapp-identity.pfx" -Password $password | Out-Null
-Export-PfxCertificate -Cert $identityServerCert -FilePath "$searchCertPath/aspnetapp-search.pfx" -Password $password | Out-Null
-Export-PfxCertificate -Cert $identityServerCert -FilePath "$parserCertPath/aspnetapp-parser.pfx" -Password $password | Out-Null
-Export-PfxCertificate -Cert $webApiCert -FilePath "$webappCertPath/aspnetapp-web-app.pfx" -Password $password | Out-Null
+Export-PfxCertificate -Cert $identityCert -FilePath "$rootCertPathPfx/aspnetapp-identity.pfx" -Password $password | Out-Null
+Export-PfxCertificate -Cert $searchCert -FilePath "$rootCertPathPfx/aspnetapp-search.pfx" -Password $password | Out-Null
+Export-PfxCertificate -Cert $parserCert -FilePath "$rootCertPathPfx/aspnetapp-parser.pfx" -Password $password | Out-Null
+Export-PfxCertificate -Cert $webappCert -FilePath "$rootCertPathPfx/aspnetapp-web-app.pfx" -Password $password | Out-Null
 
 # Export .cer to be converted to .crt to be trusted within the Docker container.
 $rootCertPathCer = "$rootCertPathPfx/aspnetapp-root-cert.cer"
 Export-Certificate -Cert $testRootCA -FilePath $rootCertPathCer -Type CERT | Out-Null
 
 # Trust it on your host machine.
-$store = New-Object System.Security.Cryptography.X509Certificates.X509Store "Root", "LocalMachine"
+$store = New-Object -TypeName System.Security.Cryptography.X509Certificates.X509Store "Root", "LocalMachine"
 $store.Open("ReadWrite")
 
 $rootCertAlreadyTrusted = ($store.Certificates | Where-Object { $_.Subject -eq "CN=$rootCN" } | Measure-Object).Count -eq 1
 
 if ($rootCertAlreadyTrusted -eq $false) {
     Write-Output "Adding the root CA certificate to the trust store."
-    $store.Add($testRootCA)
+    $store.AddRange($testRootCA)
 }
 
 $store.Close()
