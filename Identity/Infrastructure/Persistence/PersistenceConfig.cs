@@ -17,6 +17,7 @@ public static class PersistenceConfig
 			if(app.Configuration.GetValue<bool>("Persistence:SeedData"))
 			{
 				UserData.SeedUserDataInto(app);
+				app.SeedConfigData();
 			}
 
 			if(app.Environment.IsDevelopment())

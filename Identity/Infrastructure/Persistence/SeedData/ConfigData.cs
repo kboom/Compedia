@@ -7,17 +7,21 @@ namespace Compedia.Identity.Infrastructure.Persistence.SeedData;
 
 public static class ConfigData
 {
-	public static void SeedClientDataInto(this WebApplication app)
+	public static void SeedConfigData(this WebApplication app)
 	{
 		using var scope = app.Services.CreateScope();
 		var services = scope.ServiceProvider;
 
-		var context = services.GetRequiredService<ConfigurationDbContext>();
-		context.Database.EnsureDeleted();
-		context.Database.Migrate();
-		AddClients(context);
-		AddResources(context);
-		AddApiScopes(context);
+		var persistedGrantDbContext = services.GetRequiredService<PersistedGrantDbContext>();
+		persistedGrantDbContext.Database.EnsureDeleted();
+		persistedGrantDbContext.Database.Migrate();
+
+		var configurationDbContext = services.GetRequiredService<ConfigurationDbContext>();
+		configurationDbContext.Database.EnsureDeleted();
+		configurationDbContext.Database.Migrate();
+		AddClients(configurationDbContext);
+		AddResources(configurationDbContext);
+		AddApiScopes(configurationDbContext);
 	}
 
 	private static void AddApiScopes(ConfigurationDbContext context)

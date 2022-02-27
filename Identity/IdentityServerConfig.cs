@@ -13,7 +13,6 @@ public static class IdentityServerConfig
 	{
 		builder.Services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, AppClaimsPrincipalFactory>();
 
-		var configurationConnection = builder.Configuration.GetConnectionString("ConfigurationDbConnection");
 		var migrationsAssembly = typeof(ApplicationDbContext).Assembly.FullName;
 
 		builder.Services.AddIdentityServer(options =>
@@ -26,13 +25,19 @@ public static class IdentityServerConfig
 		})
 				.AddDeveloperSigningCredential() // disable in production
 				.AddConfigurationStore(options => options.ConfigureDbContext = b => b.UseSqlServer(
-					configurationConnection,
+					builder.Configuration.GetConnectionString("ConfigurationDbConnection"),
 					sql => sql.MigrationsAssembly(migrationsAssembly)
 				))
-				.AddOperationalStore(options => options.ConfigureDbContext = b => b.UseSqlServer(
-					configurationConnection,
-					sql => sql.MigrationsAssembly(migrationsAssembly)
-				))
+				.AddOperationalStore(options =>
+				{
+					options.ConfigureDbContext = b => b.UseSqlServer(
+						builder.Configuration.GetConnectionString("PersistedGrantDbConnection"),
+						sql => sql.MigrationsAssembly(migrationsAssembly)
+					);
+
+					options.EnableTokenCleanup = true;
+					options.TokenCleanupInterval = 3600;
+				})
 				.AddAspNetIdentity<ApplicationUser>();
 
 		builder.Services.AddIdentity<ApplicationUser, IdentityRole>()

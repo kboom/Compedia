@@ -19,11 +19,7 @@ public static class UserData
 		{
 			var context = services.GetRequiredService<ApplicationDbContext>();
 
-			if(context.Database.IsSqlite())
-			{
-				context.Database.EnsureDeleted();
-			}
-
+			context.Database.EnsureDeleted();
 			context.Database.Migrate();
 
 			var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
