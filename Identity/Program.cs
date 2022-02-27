@@ -6,9 +6,12 @@ using Compedia.Identity.Controllers;
 using Compedia.Identity.Infrastructure.Logging;
 using Compedia.Identity.Infrastructure.Persistence;
 using Compedia.Libs.LanguageExtensions;
+using Microsoft.IdentityModel.Logging;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+IdentityModelEventSource.ShowPII = true;
 
 Action<WebApplication>[] actions = {
 	builder.ConfigureLogging(),

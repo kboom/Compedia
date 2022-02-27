@@ -5,61 +5,42 @@
 
 $ErrorActionPreference = "Stop"
 
-$rootCN = "IdentityServerDockerDemoRootCert"
+$rootCN = "CompediaRootCert"
 $identityCNs = "identity", "localhost"
 $searchCNs = "search", "localhost"
 $parserCNs = "parser", "localhost"
 $webappCNs = "webapp", "localhost"
 
-$alreadyExistingCertsRoot = Get-ChildItem -Path Cert:\LocalMachine\My -Recurse | Where-Object { $_.Subject -eq "CN=$rootCN" }
-$alreadyExistingCertsIdentity = Get-ChildItem -Path Cert:\LocalMachine\My -Recurse | Where-Object { $_.Subject -eq ("CN={0}" -f $identityCNs[0]) }
-$alreadyExistingCertsSearch = Get-ChildItem -Path Cert:\LocalMachine\My -Recurse | Where-Object { $_.Subject -eq ("CN={0}" -f $searchCNs[0]) }
-$alreadyExistingCertsParser = Get-ChildItem -Path Cert:\LocalMachine\My -Recurse | Where-Object { $_.Subject -eq ("CN={0}" -f $parserCNs[0]) }
-$alreadyExistingCertsWebapp = Get-ChildItem -Path Cert:\LocalMachine\My -Recurse | Where-Object { $_.Subject -eq ("CN={0}" -f $webappCNs[0]) }
+function Remove-RootCertificate {
+    param (
+        [string[]]$CertificateName
+    )
 
-if ($alreadyExistingCertsRoot.Count -eq 1) {
-    Write-Output "Skipping creating Root CA certificate as it already exists."
-    $testRootCA = [Microsoft.CertificateServices.Commands.Certificate] $alreadyExistingCertsRoot[0]
+    Get-ChildItem -Path Cert:\LocalMachine\My -Recurse
+    | Where-Object { $_.Subject -eq "CN=$CertificateName" }
+    | Remove-Item
 }
-else {
-    $testRootCA = New-SelfSignedCertificate -Subject $rootCN -KeyUsageProperty Sign -KeyUsage CertSign -CertStoreLocation Cert:\LocalMachine\My
-}
+function Remove-ChildCertificate {
+    param (
+        [string[]]$CertificateName
+    )
 
-if ($alreadyExistingCertsIdentity.Count -eq 1) {
-    Write-Output "Skipping creating Identity Server certificate as it already exists."
-    $identityCert = [Microsoft.CertificateServices.Commands.Certificate] $alreadyExistingCertsIdentity[0]
-}
-else {
-    # Create a SAN cert for both identity-server and localhost.
-    $identityCert = New-SelfSignedCertificate -DnsName $identityCNs -Signer $testRootCA -CertStoreLocation Cert:\LocalMachine\My
+    Get-ChildItem -Path Cert:\LocalMachine\My -Recurse
+    | Where-Object { $_.Subject -eq ("CN={0}" -f $CertificateName[0]) }
+    | Remove-Item
 }
 
-if ($alreadyExistingCertsSeach.Count -eq 1) {
-    Write-Output "Skipping creating Search Service certificate as it already exists."
-    $searchCert = [Microsoft.CertificateServices.Commands.Certificate] $alreadyExistingCertsSearch[0]
-}
-else {
-    # Create a SAN cert for both search service and localhost.
-    $searchCert = New-SelfSignedCertificate -DnsName $searchCNs -Signer $testRootCA -CertStoreLocation Cert:\LocalMachine\My
-}
+Remove-RootCertificate $rootCN
+Remove-ChildCertificate  $identityCNs
+Remove-ChildCertificate  $searchCNs
+Remove-ChildCertificate  $parserCNs
+Remove-ChildCertificate  $webappCNs
 
-if ($alreadyExistingCertsParser.Count -eq 1) {
-    Write-Output "Skipping creating Parser Service certificate as it already exists."
-    $parserCert = [Microsoft.CertificateServices.Commands.Certificate] $alreadyExistingCertsParser[0]
-}
-else {
-    # Create a SAN cert for both search service and localhost.
-    $parserCert = New-SelfSignedCertificate -DnsName $parserCNs -Signer $testRootCA -CertStoreLocation Cert:\LocalMachine\My
-}
-
-if ($alreadyExistingCertsWebapp.Count -eq 1) {
-    Write-Output "Skipping creating webapp certificate as it already exists."
-    $webappCert = [Microsoft.CertificateServices.Commands.Certificate] $alreadyExistingCertsWebapp[0]
-}
-else {
-    # Create a SAN cert for both webapp and localhost.
-    $webappCert = New-SelfSignedCertificate -DnsName $webappCNs -Signer $testRootCA -CertStoreLocation Cert:\LocalMachine\My
-}
+$testRootCA = New-SelfSignedCertificate -Subject $rootCN -KeyUsageProperty Sign -KeyUsage CertSign -CertStoreLocation Cert:\LocalMachine\My
+$identityCert = New-SelfSignedCertificate -DnsName $identityCNs -Signer $testRootCA -CertStoreLocation Cert:\LocalMachine\My
+$searchCert = New-SelfSignedCertificate -DnsName $searchCNs -Signer $testRootCA -CertStoreLocation Cert:\LocalMachine\My
+$parserCert = New-SelfSignedCertificate -DnsName $parserCNs -Signer $testRootCA -CertStoreLocation Cert:\LocalMachine\My
+$webappCert = New-SelfSignedCertificate -DnsName $webappCNs -Signer $testRootCA -CertStoreLocation Cert:\LocalMachine\My
 
 # Export it for docker container to pick up later.
 $password = ConvertTo-SecureString -String "password" -Force -AsPlainText
@@ -86,7 +67,7 @@ $rootCertAlreadyTrusted = ($store.Certificates | Where-Object { $_.Subject -eq "
 
 if ($rootCertAlreadyTrusted -eq $false) {
     Write-Output "Adding the root CA certificate to the trust store."
-    $store.AddRange($testRootCA)
+    $store.Add($testRootCA)
 }
 
 $store.Close()

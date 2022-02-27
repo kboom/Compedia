@@ -10,8 +10,6 @@ JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 
 var odicSettings = builder.Configuration.GetSection("OidcSettings").Get<OidcSettings>();
 
-ServicePointManager.ServerCertificateValidationCallback += (o, c, ch, er) => true;
-
 builder.Services.AddAuthentication(options =>
 {
 	options.DefaultScheme = "Cookies";

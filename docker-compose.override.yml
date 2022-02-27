@@ -1,4 +1,4 @@
-version: "3.4"
+version: "3.9"
 
 services:
   identity:
@@ -19,6 +19,8 @@ services:
         source: ./Certs/aspnetapp-root-cert.cer
         target: /https-root/aspnetapp-root-cert.cer
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+    entrypoint:
+      - /https/TrustRootCert.sh
   search:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -33,6 +35,8 @@ services:
         source: ./Certs/aspnetapp-root-cert.cer
         target: /https-root/aspnetapp-root-cert.cer
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+    entrypoint:
+      - /https/TrustRootCert.sh
   webapp:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -48,3 +52,5 @@ services:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
     ports:
       - "4433:443"
+    entrypoint:
+      - /https/TrustRootCert.sh

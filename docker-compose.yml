@@ -8,9 +8,19 @@ services:
     build:
       context: .
       dockerfile: Identity\Dockerfile
+    hostname: identity
+    networks:
+       compedia:    
+          aliases:
+            - identity
 
   identity-db:
     image: "mcr.microsoft.com/mssql/server"
+    hostname: identity-db
+    networks:
+       compedia:    
+          aliases:
+            - identity-db
     environment:
       - "SA_PASSWORD=Your_password123"
       - "ACCEPT_EULA=Y"
@@ -22,9 +32,22 @@ services:
     build:
       context: .
       dockerfile: Search\Dockerfile
+    hostname: search
+    networks:
+       compedia:    
+          aliases:
+            - search
 
   webapp:
     image: ${DOCKER_REGISTRY-}compedia_webapp
     build:
       context: .
       dockerfile: Webapp\Dockerfile
+    hostname: webapp
+    networks:
+       compedia:    
+          aliases:
+            - webapp
+
+networks:
+  compedia:
