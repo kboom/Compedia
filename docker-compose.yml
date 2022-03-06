@@ -33,11 +33,11 @@ services:
     build:
       context: .
       dockerfile: Identity\Dockerfile
-    hostname: identity
+    hostname: identity.compedia.local
     networks:
       compedia:    
           aliases:
-            - identity
+            - identity.compedia.local
 
   identity-db:
     image: "mcr.microsoft.com/mssql/server"
@@ -58,11 +58,11 @@ services:
     build:
       context: .
       dockerfile: Search\Dockerfile
-    hostname: search
+    hostname: search.compedia.local
     networks:
       compedia:    
           aliases:
-            - search
+            - search.compedia.local
 
   webapp:
     image: ${DOCKER_REGISTRY-}compedia_webapp
@@ -70,11 +70,11 @@ services:
     build:
       context: .
       dockerfile: Webapp\Dockerfile
-    hostname: webapp
+    hostname: webapp.compedia.local
     networks:
       compedia:    
           aliases:
-            - webapp
+            - webapp.compedia.local
 
 networks:
   compedia:

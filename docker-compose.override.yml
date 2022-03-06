@@ -20,13 +20,12 @@ services:
     ports:
       - "5443:443"
     volumes:
-      - ./Cluster/local/Certs:/https/
-      - type: bind
-        source: ./Cluster/local/Certs/root-cert.cer
-        target: /https-root/root-cert.cer
+      - ./Cluster/local/trust.root.cert.sh/:/https/trust.sh:ro
+      - ./Cluster/local/Certs/root-cert.cer:/https/root-cert.cer:ro
+      - ./Cluster/local/Certs/identity.compedia.local.pfx:/https/identity.compedia.local.pfx:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
     entrypoint:
-      - /https/trust.root.cert.sh
+      - /https/trust.sh
   search:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -36,27 +35,25 @@ services:
     ports:
       - "6443:443"
     volumes:
-      - ./Cluster/local//Certs:/https/
-      - type: bind
-        source: ./Cluster/local/Certs/root-cert.cer
-        target: /https-root/root-cert.cer
+      - ./Cluster/local/trust.root.cert.sh/:/https/trust.sh:ro
+      - ./Cluster/local/Certs/root-cert.cer:/https/root-cert.cer:ro
+      - ./Cluster/local/Certs/search.compedia.local.pfx:/https/search.compedia.local.pfx:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
     entrypoint:
-      - /https/trust.root.cert.sh
+      - /https/trust.sh
   webapp:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443
       - ASPNETCORE_Kestrel__Certificates__Default__Password=password
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/web-app.compedia.local.pfx
-      - OidcSettings__AuthorityServerUrl=https://identity
+      - OidcSettings__AuthorityServerUrl=https://identity.compedia.local
     volumes:
-      - ./Cluster/local/Certs:/https/
-      - type: bind
-        source: ./Cluster/local/Certs/root-cert.cer
-        target: /https-root/root-cert.cer
+      - ./Cluster/local/trust.root.cert.sh/:/https/trust.sh:ro
+      - ./Cluster/local/Certs/root-cert.cer:/https/root-cert.cer:ro
+      - ./Cluster/local/Certs/web-app.compedia.local.pfx:/https/web-app.compedia.local.pfx:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
     ports:
       - "4433:443"
     entrypoint:
-      - /https/trust.root.cert.sh
+      - /https/trust.sh

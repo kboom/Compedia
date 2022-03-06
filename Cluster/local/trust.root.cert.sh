@@ -4,6 +4,6 @@
 set -e
 
 # trust dev root CA
-openssl x509 -inform DER -in /https-root/root-cert.cer -out /https-root/root-cert.crt
-cp /https-root/root-cert.crt /usr/local/share/ca-certificates/
+openssl x509 -inform DER -in /https/root-cert.cer -out /https/root-cert.crt
+cp /https/root-cert.crt /usr/local/share/ca-certificates/
 update-ca-certificates
