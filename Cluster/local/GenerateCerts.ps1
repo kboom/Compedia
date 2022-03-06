@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 
 $rootCN = "CompediaRootCert"
-$compediaCNs = "*.compedia.local", "localhost"
+$compediaCNs = "compedia.local", "localhost"
 $identityCNs = "identity.compedia.local", "localhost"
 $searchCNs = "search.compedia.local", "localhost"
 $parserCNs = "parser.compedia.local", "localhost"
@@ -55,21 +55,10 @@ Export-PfxCertificate -Cert $parserCert -FilePath "$rootCertPathPfx/parser.compe
 Export-PfxCertificate -Cert $webappCert -FilePath "$rootCertPathPfx/web-app.compedia.local.pfx" -Password $password | Out-Null
 
 # Convert to an unprotected crt + key format which nginx can understand
-docker run --rm -v "${pwd}:/work" -it nginx /work/convert.certificates.sh
+docker run --rm -v "${PSScriptRoot}:/work" -it nginx /work/convert.certificates.sh
 
 # Export .cer to be converted to .crt to be trusted within each service Docker container.
 $rootCertPathCer = "$rootCertPathPfx/root-cert.cer"
 Export-Certificate -Cert $testRootCA -FilePath $rootCertPathCer -Type CERT | Out-Null
 
-# Trust it on your host machine.
-$store = New-Object -TypeName System.Security.Cryptography.X509Certificates.X509Store "Root", "LocalMachine"
-$store.Open("ReadWrite")
-
-$rootCertAlreadyTrusted = ($store.Certificates | Where-Object { $_.Subject -eq "CN=$rootCN" } | Measure-Object).Count -eq 1
-
-if ($rootCertAlreadyTrusted -eq $false) {
-    Write-Output "Adding the root CA certificate to the trust store."
-    $store.Add($testRootCA)
-}
-
-$store.Close()
+Import-Certificate -FilePath $rootCertPathCer -CertStoreLocation 'Cert:\LocalMachine\Root'
