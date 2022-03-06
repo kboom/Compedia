@@ -1,15 +1,11 @@
-# Source: https://stackoverflow.com/a/62060315
-# Generate self-signed certificate to be used by IdentityServer.
-# When using localhost - API cannot see the IdentityServer from within the docker-compose'd network.
-# You have to run this script as Administrator (open Powershell by right click -> Run as Administrator).
-
 $ErrorActionPreference = "Stop"
 
 $rootCN = "CompediaRootCert"
-$identityCNs = "identity", "localhost"
-$searchCNs = "search", "localhost"
-$parserCNs = "parser", "localhost"
-$webappCNs = "webapp", "localhost"
+$compediaCNs = "*.compedia.local", "localhost"
+$identityCNs = "identity.compedia.local", "localhost"
+$searchCNs = "search.compedia.local", "localhost"
+$parserCNs = "parser.compedia.local", "localhost"
+$webappCNs = "webapp.compedia.local", "localhost"
 
 function Remove-RootCertificate {
     param (
@@ -31,12 +27,14 @@ function Remove-ChildCertificate {
 }
 
 Remove-RootCertificate $rootCN
+Remove-ChildCertificate  $compediaCNs
 Remove-ChildCertificate  $identityCNs
 Remove-ChildCertificate  $searchCNs
 Remove-ChildCertificate  $parserCNs
 Remove-ChildCertificate  $webappCNs
 
 $testRootCA = New-SelfSignedCertificate -Subject $rootCN -KeyUsageProperty Sign -KeyUsage CertSign -CertStoreLocation Cert:\LocalMachine\My
+$compediaCert = New-SelfSignedCertificate -DnsName $compediaCNs -Signer $testRootCA -CertStoreLocation Cert:\LocalMachine\My
 $identityCert = New-SelfSignedCertificate -DnsName $identityCNs -Signer $testRootCA -CertStoreLocation Cert:\LocalMachine\My
 $searchCert = New-SelfSignedCertificate -DnsName $searchCNs -Signer $testRootCA -CertStoreLocation Cert:\LocalMachine\My
 $parserCert = New-SelfSignedCertificate -DnsName $parserCNs -Signer $testRootCA -CertStoreLocation Cert:\LocalMachine\My
@@ -49,14 +47,18 @@ $rootCertPathPfx = "Certs"
 
 New-Item -ItemType Directory -Path $rootCertPathPfx -Force | Out-Null
 
-Export-PfxCertificate -Cert $testRootCA -FilePath "$rootCertPathPfx/aspnetapp-root-cert.pfx" -Password $password | Out-Null
-Export-PfxCertificate -Cert $identityCert -FilePath "$rootCertPathPfx/aspnetapp-identity.pfx" -Password $password | Out-Null
-Export-PfxCertificate -Cert $searchCert -FilePath "$rootCertPathPfx/aspnetapp-search.pfx" -Password $password | Out-Null
-Export-PfxCertificate -Cert $parserCert -FilePath "$rootCertPathPfx/aspnetapp-parser.pfx" -Password $password | Out-Null
-Export-PfxCertificate -Cert $webappCert -FilePath "$rootCertPathPfx/aspnetapp-web-app.pfx" -Password $password | Out-Null
+Export-PfxCertificate -Cert $testRootCA -FilePath "$rootCertPathPfx/root-cert.pfx" -Password $password | Out-Null
+Export-PfxCertificate -Cert $compediaCert -FilePath "$rootCertPathPfx/compedia.local.pfx" -Password $password | Out-Null
+Export-PfxCertificate -Cert $identityCert -FilePath "$rootCertPathPfx/identity.compedia.local.pfx" -Password $password | Out-Null
+Export-PfxCertificate -Cert $searchCert -FilePath "$rootCertPathPfx/search.compedia.local.pfx" -Password $password | Out-Null
+Export-PfxCertificate -Cert $parserCert -FilePath "$rootCertPathPfx/parser.compedia.local.pfx" -Password $password | Out-Null
+Export-PfxCertificate -Cert $webappCert -FilePath "$rootCertPathPfx/web-app.compedia.local.pfx" -Password $password | Out-Null
 
-# Export .cer to be converted to .crt to be trusted within the Docker container.
-$rootCertPathCer = "$rootCertPathPfx/aspnetapp-root-cert.cer"
+# Convert to an unprotected crt + key format which nginx can understand
+docker run --rm -v "${pwd}:/work" -it nginx /work/convert.certificates.sh
+
+# Export .cer to be converted to .crt to be trusted within each service Docker container.
+$rootCertPathCer = "$rootCertPathPfx/root-cert.cer"
 Export-Certificate -Cert $testRootCA -FilePath $rootCertPathCer -Type CERT | Out-Null
 
 # Trust it on your host machine.

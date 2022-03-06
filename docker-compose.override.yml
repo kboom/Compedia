@@ -1,5 +1,11 @@
 version: "3.9"
 
+# For now it seems the problem is that we're using both localhost and internal domain names
+# This is confusing. Try to make windows understand internal domain names of the containers so that the browser redirects in oauth work nice.
+# Alternatively, expose ports and keep using localhost...
+# https://gist.github.com/BretFisher/f1d1be2a8ab6df379018bcbf766e74a4
+# https://www.supereasy.com/how-to-configure-nginx-as-a-https-reverse-proxy-easily/
+# test this https://www.supereasy.com/how-to-configure-nginx-as-a-https-reverse-proxy-easily/
 services:
   identity:
     environment:
@@ -7,50 +13,50 @@ services:
       - "ConnectionStrings__ConfigurationDbConnection=Server=identity-db;Database=ConfigurationDb;User=sa;Password=Your_password123;MultipleActiveResultSets=true"
       - "ConnectionStrings__PersistedGrantDbConnection=Server=identity-db;Database=PersistedGrantDb;User=sa;Password=Your_password123;MultipleActiveResultSets=true"
       - ASPNETCORE_Kestrel__Certificates__Default__Password=password
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp-identity.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/identity.compedia.local.pfx
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443
       - Persistence:SeedData=true
     ports:
       - "5443:443"
     volumes:
-      - ./Certs:/https/
+      - ./Cluster/local/Certs:/https/
       - type: bind
-        source: ./Certs/aspnetapp-root-cert.cer
-        target: /https-root/aspnetapp-root-cert.cer
+        source: ./Cluster/local/Certs/root-cert.cer
+        target: /https-root/root-cert.cer
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
     entrypoint:
-      - /https/TrustRootCert.sh
+      - /https/trust.root.cert.sh
   search:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443
       - ASPNETCORE_Kestrel__Certificates__Default__Password=password
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp-search.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/search.compedia.local.pfx
     ports:
       - "6443:443"
     volumes:
-      - ./Certs:/https/
+      - ./Cluster/local//Certs:/https/
       - type: bind
-        source: ./Certs/aspnetapp-root-cert.cer
-        target: /https-root/aspnetapp-root-cert.cer
+        source: ./Cluster/local/Certs/root-cert.cer
+        target: /https-root/root-cert.cer
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
     entrypoint:
-      - /https/TrustRootCert.sh
+      - /https/trust.root.cert.sh
   webapp:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443
       - ASPNETCORE_Kestrel__Certificates__Default__Password=password
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp-web-app.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/web-app.compedia.local.pfx
       - OidcSettings__AuthorityServerUrl=https://identity
     volumes:
-      - ./Certs:/https/
+      - ./Cluster/local/Certs:/https/
       - type: bind
-        source: ./Certs/aspnetapp-root-cert.cer
-        target: /https-root/aspnetapp-root-cert.cer
+        source: ./Cluster/local/Certs/root-cert.cer
+        target: /https-root/root-cert.cer
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
     ports:
       - "4433:443"
     entrypoint:
-      - /https/TrustRootCert.sh
+      - /https/trust.root.cert.sh

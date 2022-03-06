@@ -1,8 +1,33 @@
 version: '3.9'
 
+# Better do this for kubernetes
 services:
+  # This container is the reverse proxy allowing us to reach select containers within Docker network
+  # from localhost through a configured domainname/path similar to how it is being done in a production environment.
+  # https://stackoverflow.com/questions/66111292/nginx-proxy-ssl-trusted-certificate-with-letsencrypt-upstream
+  # https://www.ringingliberty.com/2021/02/09/how-does-nginx-verify-certificates-proxy_ssl_verify/
+  nginx:
+    image: ${DOCKER_REGISTRY-}compedia_nginx
+    restart: always
+    build:
+      context: .
+      dockerfile: Cluster\local\ReverseProxy\Image\Dockerfile
+    container_name: reverse-proxy
+    environment:
+    - NGINX_HOST=compedia.local
+    - NGINX_PORT=443
+    ports:
+    - 9443:443
+    volumes:
+      - ./Cluster/local/ReverseProxy/Configs:/etc/nginx:ro
+      - ./Cluster/local/Certs:/etc/ssl/certs:ro
+      - ./Cluster/local/Logs:/var/log/nginx:rw
+    networks:
+      compedia:
+
   identity:
     image: ${DOCKER_REGISTRY-}compedia_identity
+    restart: always
     depends_on:
     - identity-db
     build:
@@ -10,7 +35,7 @@ services:
       dockerfile: Identity\Dockerfile
     hostname: identity
     networks:
-       compedia:    
+      compedia:    
           aliases:
             - identity
 
@@ -18,7 +43,7 @@ services:
     image: "mcr.microsoft.com/mssql/server"
     hostname: identity-db
     networks:
-       compedia:    
+      compedia:    
           aliases:
             - identity-db
     environment:
@@ -27,6 +52,7 @@ services:
 
   search:
     image: ${DOCKER_REGISTRY-}compedia_search
+    restart: always
     depends_on:
     - identity
     build:
@@ -34,18 +60,19 @@ services:
       dockerfile: Search\Dockerfile
     hostname: search
     networks:
-       compedia:    
+      compedia:    
           aliases:
             - search
 
   webapp:
     image: ${DOCKER_REGISTRY-}compedia_webapp
+    restart: always
     build:
       context: .
       dockerfile: Webapp\Dockerfile
     hostname: webapp
     networks:
-       compedia:    
+      compedia:    
           aliases:
             - webapp
 
