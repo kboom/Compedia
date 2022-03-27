@@ -8,7 +8,7 @@ builder.Services.AddControllers();
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
-        options.Authority = "https://identity";
+        options.Authority = "https://identity.compedia.local:9443";
 
         options.TokenValidationParameters = new TokenValidationParameters
         {

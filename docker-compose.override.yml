@@ -15,10 +15,10 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Password=password
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/identity.compedia.local.pfx
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443
+      - ASPNETCORE_URLS=https://+:9443
       - Persistence:SeedData=true
     ports:
-      - "5443:443"
+      - "5443:9443"
     volumes:
       - ./Cluster/local/trust.root.cert.sh/:/https/trust.sh:ro
       - ./Cluster/local/Certs/root-cert.cer:/https/root-cert.cer:ro
@@ -26,6 +26,9 @@ services:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
     entrypoint:
       - /https/trust.sh
+  identity-db:
+    ports:
+      - "11433:1433"
   search:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -47,7 +50,7 @@ services:
       - ASPNETCORE_URLS=https://+:443
       - ASPNETCORE_Kestrel__Certificates__Default__Password=password
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/web-app.compedia.local.pfx
-      - OidcSettings__AuthorityServerUrl=https://identity.compedia.local
+      - OidcSettings__AuthorityServerUrl=https://identity.compedia.local:9443
     volumes:
       - ./Cluster/local/trust.root.cert.sh/:/https/trust.sh:ro
       - ./Cluster/local/Certs/root-cert.cer:/https/root-cert.cer:ro

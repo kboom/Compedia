@@ -35,7 +35,7 @@ public static class UserData
 
 	private static void SeedUsers(this UserManager<ApplicationUser> userManager)
 	{
-		userManager.AddUser("alice", "alice@email.com", "Pass123!", new Claim[]{
+		userManager.AddUser("alice", "alice@email.com", "Pass123$", new Claim[]{
 												new Claim(JwtClaimTypes.Name, "Alice Smith"),
 												new Claim(JwtClaimTypes.GivenName, "Alice"),
 												new Claim(JwtClaimTypes.FamilyName, "Smith"),

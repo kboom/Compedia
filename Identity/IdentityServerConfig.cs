@@ -1,5 +1,7 @@
-﻿using Compedia.Identity.Services;
+﻿using Compedia.Identity.Infrastructure.Middleware;
+using Compedia.Identity.Services;
 using IdentityServer4;
+using IdentityServer4.Hosting;
 using IdentityServerAspNetIdentity.Data;
 using IdentityServerAspNetIdentity.Models;
 using Microsoft.AspNetCore.Identity;
@@ -60,6 +62,11 @@ public static class IdentityServerConfig
 			 options.ClientSecret = googleIdentityProviderSettings.ClientSecret;
 		 });
 
-		return app => app.UseIdentityServer();
+		return app =>
+		{
+			app.UseMiddleware<PublicFacingUrlMiddleware>("https://identity.compedia.local:9443");
+			app.ConfigureCors();
+			app.UseMiddleware<IdentityServerMiddleware>();
+		};
 	}
 }

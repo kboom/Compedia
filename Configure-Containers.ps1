@@ -1,0 +1,1 @@
+$('WebApp', 'Search', 'Identity') | ForEach-Object { docker exec -it $_ /https/trust.sh }
