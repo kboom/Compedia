@@ -1,0 +1,34 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "files.autoSave": "onFocusChange",
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/__snapshots__": true
+  },
+  "search.exclude": {
+    "**/node_modules": true
+  },
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "cSpell.words": ["persistor"],
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "workbench.editor.enablePreviewFromCodeNavigation": true,
+  "workbench.editor.enablePreviewFromQuickOpen": true,
+  "workbench.editor.highlightModifiedTabs": true,
+  "autoSnippet.snippets": [
+    { "pattern": "**/*.component.tsx", "snippet": ".react-fc" }
+  ]
+}

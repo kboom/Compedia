@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`with { checked: false, readOnly: false } 1`] = `
+<label
+  className="sc-gsDKAQ hHlMTP"
+>
+  <input
+    checked={false}
+    className="sc-dkPtRN jjGYdK"
+    onChange={[Function]}
+    readOnly={false}
+    type="checkbox"
+  />
+  <i
+    className="sc-hKwDye kmDGzT"
+  />
+</label>
+`;
+
+exports[`with { checked: false, readOnly: true } 1`] = `
+<label
+  className="sc-gsDKAQ hHlMTP"
+>
+  <input
+    checked={false}
+    className="sc-dkPtRN jjGYdK"
+    onChange={[Function]}
+    readOnly={true}
+    type="checkbox"
+  />
+  <i
+    className="sc-hKwDye kmDGzT"
+  />
+</label>
+`;
+
+exports[`with { checked: true, readOnly: false } 1`] = `
+<label
+  className="sc-gsDKAQ hHlMTP"
+>
+  <input
+    checked={true}
+    className="sc-dkPtRN jjGYdK"
+    onChange={[Function]}
+    readOnly={false}
+    type="checkbox"
+  />
+  <i
+    className="sc-hKwDye kmDGzT"
+  />
+</label>
+`;
+
+exports[`with { checked: true, readOnly: true } 1`] = `
+<label
+  className="sc-gsDKAQ hHlMTP"
+>
+  <input
+    checked={true}
+    className="sc-dkPtRN jjGYdK"
+    onChange={[Function]}
+    readOnly={true}
+    type="checkbox"
+  />
+  <i
+    className="sc-hKwDye kmDGzT"
+  />
+</label>
+`;
