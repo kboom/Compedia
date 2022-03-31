@@ -4,6 +4,9 @@
 .Showcase
 * xref:showcase:index.adoc[Overview]
 
+.Contributing
+* xref:contributing:index.adoc[Overview]
+
 .Architecture
 * xref:architecture:index.adoc[Overview]
 
