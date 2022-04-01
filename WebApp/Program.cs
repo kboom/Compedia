@@ -54,10 +54,10 @@ app.UseSpa(spa =>
 
 	spa.Options.SourcePath = "ClientApp";
 
-	if(env.IsDevelopment())
+	if(builder.Environment.IsDevelopment())
 	{
 		//spa.UseAngularCliServer(npmScript: "start");
-		spa.UseProxyToSpaDevelopmentServer(Configuration["SpaBaseUrl"] ?? "http://localhost:4200");
+		spa.UseProxyToSpaDevelopmentServer(builder.Configuration["SpaBaseUrl"] ?? "http://localhost:3000");
 	}
 });
 

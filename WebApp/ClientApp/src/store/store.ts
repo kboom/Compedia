@@ -6,29 +6,35 @@ import storage from "redux-persist/lib/storage";
 
 import type { Store } from "redux";
 import type { RootState } from "./index";
+import createOidcMiddleware from "./oidc/oidc.middleware";
+import { oidcImplicitSettings } from "../config/oidc.config";
 
 export type ConfiguredStore = Readonly<{
-  store: Store<RootState>;
-  persistor: Persistor;
+	store: Store<RootState>;
+	persistor: Persistor;
 }>;
 
 const rootPersistConfig = {
-  key: "root",
-  storage: storage,
-  whitelist: [],
+	key: "root",
+	storage: storage,
+	whitelist: [],
 };
 
-export default (initialState?: RootState): ConfiguredStore => {
-  const composeEnhancer: typeof compose =
-    (window as any)?.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = (initialState?: RootState): ConfiguredStore => {
+	const oidcMiddleware = createOidcMiddleware(oidcImplicitSettings);
 
-  const store = createStore(
-    persistReducer(rootPersistConfig, reducer()),
-    initialState,
-    composeEnhancer(applyMiddleware(thunk))
-  );
+	const composeEnhancer: typeof compose =
+		(window as any)?.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-  const persistor = persistStore(store);
+	const store = createStore(
+		persistReducer(rootPersistConfig, reducer()),
+		initialState,
+		composeEnhancer(applyMiddleware(oidcMiddleware, thunk))
+	);
 
-  return { store, persistor };
+	const persistor = persistStore(store);
+
+	return { store, persistor };
 };
+
+export default store;

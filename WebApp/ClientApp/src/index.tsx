@@ -12,40 +12,45 @@ import { cssTransition, ToastContainer } from "react-toastify";
 import reportWebVitals from "./reportWebVitals";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import { PersistGate } from "redux-persist/integration/react";
+import { oidcGetInitialLoginState } from "./store/oidc/oidc.middleware";
 
 const transition = cssTransition({
-  enter: "custom__toast__animate__bounceIn",
-  exit: "custom__toast__animate__bounceOut",
+	enter: "custom__toast__animate__bounceIn",
+	exit: "custom__toast__animate__bounceOut",
 });
 
-const initialState: RootState = (window as any)?.initialReduxState;
-const { store, persistor } = createStore(initialState);
-configureToken(store);
-
 const ToastElement = (
-  <ToastContainer
-    newestOnTop
-    theme="colored"
-    autoClose={1500}
-    draggable={false}
-    position="top-center"
-    transition={transition}
-  />
+	<ToastContainer
+		newestOnTop
+		theme="colored"
+		autoClose={1500}
+		draggable={false}
+		position="top-center"
+		transition={transition}
+	/>
 );
 
-render(
-  <StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <App />
-        </PersistGate>
-      </Provider>
-    </BrowserRouter>
-    {ToastElement}
-  </StrictMode>,
-  document.getElementById("root")
-);
+oidcGetInitialLoginState().then((oidcState) => {
+	const initialState: RootState = (window as any)?.initialReduxState;
+	const { store, persistor } = createStore(
+		Object.assign(initialState, oidcState)
+	);
+	configureToken(store);
+
+	render(
+		<StrictMode>
+			<BrowserRouter>
+				<Provider store={store}>
+					<PersistGate loading={null} persistor={persistor}>
+						<App />
+					</PersistGate>
+				</Provider>
+			</BrowserRouter>
+			{ToastElement}
+		</StrictMode>,
+		document.getElementById("root")
+	);
+});
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
@@ -56,6 +61,3 @@ serviceWorkerRegistration.unregister();
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
-
-// https://blog.logrocket.com/mirage-js-tutorial-mocking-apis-in-react/
-// https://github.com/garris/BackstopJS

@@ -6,10 +6,10 @@ import CreateTaskModalReducer from "src/modals/create-task/store";
 import type { RootState } from "./index";
 
 const reducer = () =>
-  combineReducers<RootState>({
-    account: AccountReducer,
-    TasksPageReducer,
-    CreateTaskModalReducer,
-  });
+	combineReducers<RootState>({
+		account: AccountReducer,
+		TasksPageReducer,
+		CreateTaskModalReducer,
+	});
 
 export default reducer;
