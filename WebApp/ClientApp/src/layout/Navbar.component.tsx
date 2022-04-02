@@ -1,19 +1,19 @@
-import { useIsLoggedIn } from "../hooks";
-import { useDispatch } from "react-redux";
-import { Routes as routes } from "../config";
-import { PageLinks } from "../config";
-import type { Route } from "../config";
 import type { FunctionComponent } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 import { Button } from "src/components";
-import NavigationDropdown from "./NavigationDropdown.component";
-import NavbarLink from "./NavbarLink.component";
-import { accountActionCreators } from "../store/account/account.actions";
+import useProfile from "src/hooks/useProfile";
+import type { Route } from "../config";
+import { PageLinks, Routes as routes } from "../config";
+import { useIsLoggedIn } from "../hooks";
 import { oidcActionCreators } from "../store/oidc/oidc.actions";
+import NavbarLink from "./NavbarLink.component";
+import NavigationDropdown from "./NavigationDropdown.component";
 
 export const Navbar: FunctionComponent = () => {
 	const isLoggedIn = useIsLoggedIn();
+	const profile = useProfile();
 	const dispatch = useDispatch();
 	const { pathname } = useLocation();
 	const navigate = useNavigate();
@@ -58,7 +58,7 @@ export const Navbar: FunctionComponent = () => {
 							)
 					)}
 					{isLoggedIn && (
-						<NavigationDropdown name="Account">
+						<NavigationDropdown name={`Hi ${profile?.given_name}!`}>
 							<NavbarLink path="/profile">Profile</NavbarLink>
 							<hr className="navbar-divider" />
 							<NavbarLink onClick={signOut} path={PageLinks.mainPage}>
