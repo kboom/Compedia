@@ -96,7 +96,6 @@ const signInRedirectCallback = (
 					console.error(e);
 				});
 			console.log(result);
-			// ReactRouter.browserHistory.push(result.state || "/");
 		})
 		.catch((reason) => {
 			console.error(reason);
