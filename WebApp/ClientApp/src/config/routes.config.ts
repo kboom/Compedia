@@ -1,7 +1,13 @@
 import type { ComponentType } from "react";
 import type { Params } from "react-router";
 import type { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { HomePage, LoginPage, TasksPage, LoginCallbackPage } from "../pages";
+import {
+	HomePage,
+	LoginPage,
+	TasksPage,
+	LoginCallbackPage,
+	NotFoundPage,
+} from "../pages";
 
 export const TRANSITION_DEFAULT = {
 	classNames: "fade",
@@ -59,6 +65,17 @@ export const Routes: Route[] = [
 		},
 		params: {
 			taskId: "0",
+		},
+	},
+	{
+		showInNav: false,
+		isSecured: false,
+		name: "Not found",
+		path: "/*",
+		Component: NotFoundPage,
+		transition: {
+			classNames: "page-slide-left",
+			timeout: { enter: 350, exit: 250 },
 		},
 	},
 ];

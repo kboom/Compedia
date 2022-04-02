@@ -23,7 +23,7 @@ export const Navbar: FunctionComponent = () => {
 	};
 
 	const signOut = () => {
-		dispatch(accountActionCreators.signOut());
+		dispatch(oidcActionCreators.logoutRequest());
 	};
 
 	const navRoutes = routes.reduce((acc: Route[], r: Route) => {
