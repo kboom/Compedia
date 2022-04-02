@@ -6,19 +6,19 @@ import { createStateFromUser } from "./oidc.reducer";
 
 let _oidcManager: Oidc.UserManager;
 
-const loadUser = (
-	userManager: Oidc.UserManager,
-	dispatch: Redux.Dispatch<any>
-) => {
-	_oidcManager
-		.getUser()
-		.then((user) => {
-			dispatch(oidcActionCreators.userLoaded(user));
-		})
-		.catch((e) => {
-			console.error(e);
-		});
-};
+// const loadUser = (
+// 	userManager: Oidc.UserManager,
+// 	dispatch: Redux.Dispatch<any>
+// ) => {
+// 	_oidcManager
+// 		.getUser()
+// 		.then((user) => {
+// 			dispatch(oidcActionCreators.userLoaded(user));
+// 		})
+// 		.catch((e) => {
+// 			console.error(e);
+// 		});
+// };
 
 const configureManager = (
 	userManager: Oidc.UserManager,
@@ -95,6 +95,7 @@ const signInRedirectCallback = (
 				.catch((e) => {
 					console.error(e);
 				});
+			console.log(result);
 			// ReactRouter.browserHistory.push(result.state || "/");
 		})
 		.catch((reason) => {

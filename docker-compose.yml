@@ -9,6 +9,10 @@ services:
   nginx:
     image: ${DOCKER_REGISTRY-}compedia_nginx
     restart: always
+    depends_on:
+      - identity
+      - search
+      - webapp
     build:
       context: .
       dockerfile: Cluster\local\ReverseProxy\Image\Dockerfile

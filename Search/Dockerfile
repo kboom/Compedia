@@ -17,5 +17,7 @@ RUN dotnet publish "Search.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
+RUN mkdir /docker-entrypoint.d
+COPY "docker.entrypoint.sh" .
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Compedia.Search.dll"]
+ENTRYPOINT ["./docker.entrypoint.sh", "dotnet", "Compedia.Search.dll"]

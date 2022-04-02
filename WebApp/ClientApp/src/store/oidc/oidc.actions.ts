@@ -14,7 +14,7 @@ const loginRequest = (currentRoute: string) => ({
 	currentRoute,
 });
 
-const logoutRequest = (currentRoute: string) => ({
+const logoutRequest = () => ({
 	type: OidcAction.LOGIN_LOGOUT_REQUESTED,
 });
 
