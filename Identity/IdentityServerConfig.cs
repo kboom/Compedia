@@ -2,6 +2,7 @@
 using Compedia.Identity.Services;
 using IdentityServer4;
 using IdentityServer4.Hosting;
+using IdentityServer4.Services;
 using IdentityServerAspNetIdentity.Data;
 using IdentityServerAspNetIdentity.Models;
 using Microsoft.AspNetCore.Identity;
@@ -16,6 +17,16 @@ public static class IdentityServerConfig
 		builder.Services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, AppClaimsPrincipalFactory>();
 
 		var migrationsAssembly = typeof(ApplicationDbContext).Assembly.FullName;
+
+		// this didn't work
+		//builder.Services.AddSingleton<ICorsPolicyService>((container) => {
+		//	var logger = container.GetRequiredService<ILogger<DefaultCorsPolicyService>>();
+		//	return new DefaultCorsPolicyService(logger)
+		//	{
+		//		AllowAll = true,
+		//		AllowedOrigins = { "https://compedia.local:9443", "https://identity.compedia.local:9443" }
+		//	};
+		//});
 
 		builder.Services.AddIdentityServer(options =>
 		{

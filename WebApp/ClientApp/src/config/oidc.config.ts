@@ -25,7 +25,7 @@ export const oidcImplicitSettings: UserManagerSettings & { nonce: string } = {
 	response_type: "id_token token",
 
 	// Resources requested during the authorisation request
-	scope: "openid email profile chatapi",
+	scope: "openid email profile webapi",
 
 	// Number of seconds before the token expires to trigger
 	// the `tokenExpiring` event
@@ -37,6 +37,8 @@ export const oidcImplicitSettings: UserManagerSettings & { nonce: string } = {
 
 	// Do we want to filter OIDC protocol-specific claims from the response?
 	filterProtocolClaims: true,
+
+	loadUserInfo: true,
 
 	nonce: "N" + Math.random() + "" + Date.now(),
 };

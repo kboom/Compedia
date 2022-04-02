@@ -30,7 +30,7 @@ const loginNetworkFailed = (message: string) => ({
 
 const userLoaded = (user: any) => ({
 	type: OidcAction.OIDC_USER_LOADED,
-	user: user,
+	payload: { user },
 });
 
 const userUnloaded = () => ({
