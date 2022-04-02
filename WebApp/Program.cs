@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using Compedia.WebApp;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +40,10 @@ else
 }
 
 app.UseStaticFiles();
+if(!builder.Environment.IsDevelopment())
+{
+	app.UseSpaStaticFiles();
+}
 
 app.UseRouting();
 app.UseAuthentication();
@@ -57,6 +62,7 @@ app.UseSpa(spa =>
 	if(builder.Environment.IsDevelopment())
 	{
 		//spa.UseAngularCliServer(npmScript: "start");
+		spa.UseReactDevelopmentServer(npmScript: "start");
 		spa.UseProxyToSpaDevelopmentServer(builder.Configuration["SpaBaseUrl"] ?? "http://localhost:3000");
 	}
 });

@@ -19,6 +19,12 @@ services:
       - Persistence:SeedData=true
     ports:
       - "5443:9443"
+    init: true
+    command:
+      - ;
+      - /docker-entrypoint.d/trust.sh
+      - \|
+      - parallel
     volumes:
       - ./Cluster/local/trust.root.cert.sh/:/docker-entrypoint.d/trust.sh:ro
       - ./Cluster/local/Certs/root-cert.cer:/https/root-cert.cer:ro
@@ -35,6 +41,12 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/search.compedia.local.pfx
     ports:
       - "6443:443"
+    init: true
+    command:
+      - ;
+      - /docker-entrypoint.d/trust.sh
+      - \|
+      - parallel
     volumes:
       - ./Cluster/local/trust.root.cert.sh/:/docker-entrypoint.d/trust.sh:ro
       - ./Cluster/local/Certs/root-cert.cer:/https/root-cert.cer:ro
@@ -47,6 +59,12 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Password=password
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/web-app.compedia.local.pfx
       - OidcSettings__AuthorityServerUrl=https://identity.compedia.local:9443
+    init: true
+    command:
+      - ;
+      - /docker-entrypoint.d/trust.sh
+      - \|
+      - parallel
     volumes:
       - ./Cluster/local/trust.root.cert.sh/:/docker-entrypoint.d/trust.sh:ro
       - ./Cluster/local/Certs/root-cert.cer:/https/root-cert.cer:ro

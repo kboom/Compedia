@@ -18,7 +18,5 @@ RUN dotnet publish "Identity.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
-RUN mkdir /docker-entrypoint.d
-COPY "docker.entrypoint.sh" .
 COPY --from=publish /app/publish .
-ENTRYPOINT ["./docker.entrypoint.sh", "dotnet", "Compedia.Identity.dll"]
+ENTRYPOINT ["dotnet", "Compedia.Identity.dll"]
