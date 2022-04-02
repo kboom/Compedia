@@ -16,12 +16,12 @@ services:
     build:
       context: .
       dockerfile: Cluster\local\ReverseProxy\Image\Dockerfile
-    container_name: reverse-proxy
+    container_name: nginx
     environment:
-    - NGINX_HOST=compedia.local
-    - NGINX_PORT=443
+      - NGINX_HOST=compedia.local
+      - NGINX_PORT=443
     ports:
-    - 9443:443
+      - 9443:443
     volumes:
       - ./Cluster/local/ReverseProxy/Configs:/etc/nginx:ro
       - ./Cluster/local/Certs:/etc/ssl/certs:ro
@@ -33,23 +33,23 @@ services:
     image: ${DOCKER_REGISTRY-}compedia_identity
     restart: always
     depends_on:
-    - identity-db
+      - identity-db
     build:
       context: .
       dockerfile: Identity\Dockerfile
     hostname: identity.compedia.local
     networks:
-      compedia:    
-          aliases:
-            - identity.compedia.local
+      compedia:
+        aliases:
+          - identity.compedia.local
 
   identity-db:
     image: "mcr.microsoft.com/mssql/server"
     hostname: identity-db
     networks:
-      compedia:    
-          aliases:
-            - identity-db
+      compedia:
+        aliases:
+          - identity-db
     environment:
       - "SA_PASSWORD=Your_password123"
       - "ACCEPT_EULA=Y"
@@ -58,15 +58,15 @@ services:
     image: ${DOCKER_REGISTRY-}compedia_search
     restart: always
     depends_on:
-    - identity
+      - identity
     build:
       context: .
       dockerfile: Search\Dockerfile
     hostname: search.compedia.local
     networks:
-      compedia:    
-          aliases:
-            - search.compedia.local
+      compedia:
+        aliases:
+          - search.compedia.local
 
   webapp:
     image: ${DOCKER_REGISTRY-}compedia_webapp
@@ -76,9 +76,9 @@ services:
       dockerfile: Webapp\Dockerfile
     hostname: webapp.compedia.local
     networks:
-      compedia:    
-          aliases:
-            - webapp.compedia.local
+      compedia:
+        aliases:
+          - webapp.compedia.local
 
 networks:
   compedia:
