@@ -5,8 +5,6 @@ WORKDIR /app
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
-RUN apt install -y nodejs
 WORKDIR /src
 COPY ["WebApp/WebApp.csproj", "WebApp/"]
 RUN dotnet restore "WebApp/WebApp.csproj"

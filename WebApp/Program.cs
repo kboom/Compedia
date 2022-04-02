@@ -61,9 +61,7 @@ app.UseSpa(spa =>
 
 	if(builder.Environment.IsDevelopment())
 	{
-		//spa.UseAngularCliServer(npmScript: "start");
-		spa.UseReactDevelopmentServer(npmScript: "start");
-		spa.UseProxyToSpaDevelopmentServer(builder.Configuration["SpaBaseUrl"] ?? "http://localhost:3000");
+		spa.UseProxyToSpaDevelopmentServer(builder.Configuration["SpaBaseUrl"] ?? "http://host.docker.internal:3000");
 	}
 });
 
