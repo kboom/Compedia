@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using Compedia.WebApp;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +40,10 @@ else
 }
 
 app.UseStaticFiles();
+if(!builder.Environment.IsDevelopment())
+{
+	app.UseSpaStaticFiles();
+}
 
 app.UseRouting();
 app.UseAuthentication();
@@ -46,5 +51,18 @@ app.UseAuthorization();
 
 app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute()
 				.RequireAuthorization());
+
+app.UseSpa(spa =>
+{
+	// To learn more about options for serving an Angular SPA from ASP.NET Core,
+	// see https://go.microsoft.com/fwlink/?linkid=864501
+
+	spa.Options.SourcePath = "ClientApp";
+
+	if(builder.Environment.IsDevelopment())
+	{
+		spa.UseProxyToSpaDevelopmentServer(builder.Configuration["SpaBaseUrl"] ?? "http://host.docker.internal:3000");
+	}
+});
 
 app.Run();

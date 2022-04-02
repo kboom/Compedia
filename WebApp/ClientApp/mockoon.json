@@ -1,0 +1,267 @@
+{
+  "uuid": "3a853557-9d0e-473d-9347-8329ae1bb794",
+  "lastMigration": 19,
+  "name": "Mockoon",
+  "endpointPrefix": "api/",
+  "latency": 0,
+  "port": 3001,
+  "hostname": "127.0.0.1",
+  "routes": [
+    {
+      "uuid": "ae57a607-62c6-4ea7-a232-ed4587386834",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "account/token",
+      "responses": [
+        {
+          "uuid": "277871ed-432b-4c6e-bce1-3e9e90421861",
+          "body": "{\n  \"access_token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIyOGFlOTYyNC02MGI2LTExZWMtODYwNy0wMjQyYWMxMzAwMDIiLCJuYmYiOjE2Mzk5MDk2MzAsImV4cCI6NDEwMTM1OTIzMCwiaWF0IjoxNjM5OTA5NjMwLCJraWQiOiIyOGFlOTIyOC02MGI2LTExZWMtODYwNy0wMjQyYWMxMzAwMDIifQ.w3dQjDXyH-gwqDSWE4kkWL3MiGweHAzu1ZIiN6MPQEXDbDnONHE3USp8C94lZuPfqTGjRUuGr4ThTvmcqbbLUscxJ9dXK6xiTJgZMlWTJrC9xPGgCL68PRko8jX3As8BUgXMH1kRt2vyTR6M958GPBchEqjAGXOyJVvFjpHnNQ6ammkPnObfDX2aB8CcFV6Uiz-hYiwhEwPpjo1le3inrxlDAIPvo1O-pldeX3saRuFVOGcLOjUkSNAb5lk1378sH0oU1bQ0lWS5Zx_srvtS8uFPn_I76h6ejMasN9fff2cg5cgMbG2KU8WXRbpMV_6tuo0tsWXm7Ep_EBZu0ww2gA\",\n  \"refresh_token\": \"69360b32-60b6-11ec-8607-0242ac130002\",\n  \"kid\": \"28ae9228-60b6-11ec-8607-0242ac130002\",\n  \"sub\": \"28ae9624-60b6-11ec-8607-0242ac130002\",\n  \"iat\":1639909630,\n  \"nbf\":1639909630,\n  \"exp\":4101359230\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false
+        },
+        {
+          "uuid": "f1dd4a81-9f40-478d-b99c-3a951b176bbb",
+          "body": "{\n  \"access_token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI2MzliMGQ0Mi02MDNiLTExZWMtODYwNy0wMjQyYWMxMzAwMDIiLCJuYmYiOjE2Mzk4NTcxMzEsImlzcyI6Imh0dHBzOlwvXC90YXNrb3ZlcmZsb3cuY29tIiwiZXhwIjo0MTAxMzA2NzMxLCJpYXQiOjE2Mzk4NTcxMzEsImp0aSI6ImVjNjhiZTU4LTYwM2ItMTFlYy04NjA3LTAyNDJhYzEzMDAwMiJ9.VU0-PXUUir262RKc0ctDxLgJjX4fJp9bD2rRAKyK4vfqWN6goiyHP8yLG1RT7FvQD45UyB19AnaGiu4YLO3aRYq0PA5rbhU1AO6Hp8mCWsRYcHK_CXSMh4biDT6iADlXrfnXku7hknTOsNdry7NOMZHizLE7Z57MLkH_PrnqthypL8ILqPciWvSwBsdlt5waQq0V3wghowFPq9zOrzTSCWvf7Ntv4Hwhoco7kdAowYjPfGPQGm_pH2gATuPCtpFbCW9fjISv0jYCw6eT9PDRyRGq9ofO3hP7bNubTZh5apNrUT4uhEm1oU4i0ARY647NKK_XylRoSgT4wYeO-xXpjg\",\n  \"refresh_token\": \"ec68be58-603b-11ec-8607-0242ac130002\",\n  \"sub\": \"639b0d42-603b-11ec-8607-0242ac130002\",\n  \"iss\": \"https://taskoverflow.com\",\n  \"jti\": \"ec68be58-603b-11ec-8607-0242ac130002\",\n  \"iat\": \"1639857131\",\n  \"nbf\": \"1639857131\",\n  \"exp\": \"4101306731\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false
+        }
+      ],
+      "enabled": true,
+      "randomResponse": false,
+      "sequentialResponse": false
+    },
+    {
+      "uuid": "de3fa9c3-7874-44ec-95b8-a96209edc399",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "_jwks",
+      "responses": [
+        {
+          "uuid": "3316f86d-370b-4149-ab0c-6259d52d0621",
+          "body": "{\n  \"keys\": [\n    {\n        \"kty\": \"RSA\",\n        \"use\": \"sig\",\n        \"kid\": \"fc04b834-603c-11ec-8607-0242ac130002\",\n        \"alg\": \"RS256\",\n        \"e\": \"D__7\",\n        \"n\": \"yD4fGk_dpltxds4Bzbkg__Sl8PTD5xxvsObgJu2bxZxULUkUYyR7f7EGaioMvS4qT-tB5_RfuhC9fQIRJcw7zy4TxE8vTk0TZOK0y0gLw07-XMOQgCg3VCuq9DhXVRc5PGFemACfETLQS4M64mDhb9ot7PENZ5hv8P8Z7DCQbETsVmLmy4031FM5c4CggRcN5BEQI0iM6KpOOsVsED8zxJV42A6lh6rxqA1ORvrHaJDNwQIFMCzVFYXbcZGlZ7Hb-EFHVg4a4l-p5vNijhbpL2Ls81KXqM2h7MvSyh3qXgJ-2xGVZWp6BT73h8b9H5ERNm0WS9nSLfMwpJJ4ytdrrw\"\n      }\n    ]\n}\n",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false
+        }
+      ],
+      "enabled": true,
+      "randomResponse": false,
+      "sequentialResponse": false
+    },
+    {
+      "uuid": "56cfbe52-d373-4994-8c29-f1a387e8c50b",
+      "documentation": "Get task details",
+      "method": "get",
+      "endpoint": "tasks/:taskId",
+      "responses": [
+        {
+          "uuid": "4d59935b-ca7a-44f7-80e3-43f20985d863",
+          "body": "{\n  \"id\": \"0\",\n  \"name\": \"Build a garden\",\n  \"description\": \"Make sure to follow the best practices.\",\n  \"createdAt\": \"2021-12-29T13:46:49Z\",\n  \"progressPercent\": 75,\n  \"subtaskCount\": 7,\n  \"priority\": \"high\",\n  \"tags\": [{ \"name\": \"cost\", \"color\": \"red\" }, { \"name\": \"quality of living\", \"color\": \"green\" }],\n  \"supertasks\": [\n     { \"id\": \"-1\", \"name\": \"Arrange my new home\", \"description\": \"Lots of things to do!\", \"progressPercent\": 50, \"tags\": [{ \"name\": \"cost\", \"color\": \"red\" }] }, \n     { \"id\": \"-2\", \"name\": \"Be happy\", \"description\": \"Everything that would make me happy.\", \"progressPercent\": 80, \"tags\": [{ \"name\": \"cost\", \"color\": \"red\" }] }\n  ],\n  \"subtasks\": [\n    { \"id\": \"1\", \"name\": \"Plant a tree\", \"description\": \"It would be nice to see it grow\", \"progressPercent\":30, \"tags\": [{ \"name\": \"cost\", \"color\": \"red\" }] },  \n    { \"id\": \"2\", \"name\": \"Build a pond\", \"description\": \"Some fish would be nice too\",  \"tags\": [{ \"name\": \"conception\", \"color\": \"yellow\" }] },  \n    { \"id\": \"3\", \"name\": \"Build a grill\", \"description\": \"Sunday BBQ is great\" },  \n    { \"id\": \"4\", \"name\": \"Pave the walk\", \"description\": \"Good to keep your grass neat\",  \"progressPercent\":75, \"tags\": [{ \"name\": \"quality of living\", \"color\": \"green\" }] },  \n    { \"id\": \"5\",\"name\": \"Buy a dog\", \"description\": \"This is relatively long description that should take larger tile\" },  \n    { \"id\": \"6\", \"name\": \"Plant some flowers\", \"description\": \"Give it a nice smell\" },  \n    { \"id\": \"7\", \"name\": \"Buy a bench\", \"description\": \"Great to sit on\",  \"tags\": [{ \"name\": \"stretch\", \"color\": \"blue\" }] },\n    { \"id\": \"8\", \"name\": \"Buy a banna\", \"description\": \"Great to sit on\",  \"tags\": [{ \"name\": \"stretch\", \"color\": \"blue\" }] },\n    { \"id\": \"9\", \"name\": \"Buy a orange\", \"description\": \"Oranges are very tasty and healthy this is long\",  \"tags\": [{ \"name\": \"stretch\", \"color\": \"blue\" }] },\n    { \"id\": \"10\", \"name\": \"Buy an apple\", \"description\": \"Great to sit on\",  \"progressPercent\":50, \"tags\": [{ \"name\": \"stretch\", \"color\": \"blue\" }] },\n    { \"id\": \"11\", \"name\": \"Buy a wrench\", \"description\": \"Great to sit on\",  \"tags\": [{ \"name\": \"stretch\", \"color\": \"blue\" }] },\n    { \"id\": \"12\", \"name\": \"Buy a book\", \"description\": \"Very long description that should fit into one of the larger tiles\",  \"tags\": [{ \"name\": \"stretch\", \"color\": \"blue\" }] }\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "taskId",
+              "value": "0",
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false
+        },
+        {
+          "uuid": "0041833d-ed6f-47ec-b4f0-98deeb3e026a",
+          "body": "{\n  \"id\": \"-1\",\n  \"name\": \"Arrange my new home\",\n  \"description\": \"Lots of things to do!\",\n  \"createdAt\": \"2021-12-29T13:46:49Z\",\n  \"progressPercent\": 50,\n  \"subtaskCount\": 2,\n  \"priority\": \"high\",\n  \"tags\": [{ \"name\": \"cost\", \"color\": \"red\" }, { \"name\": \"quality of living\", \"color\": \"green\" }],\n  \"supertasks\": [\n     { \"id\": \"-2\", \"name\": \"Be happy\", \"description\": \"Everything that would make me happy.\", \"progressPercent\": 80, \"tags\": [{ \"name\": \"cost\", \"color\": \"red\" }] }\n  ],\n  \"subtasks\": [\n    { \"id\": \"1\", \"name\": \"Build a garden\", \"description\": \"Make sure to follow the best practices.\", \"progressPercent\":30, \"tags\": [{ \"name\": \"cost\", \"color\": \"red\" }] },\n    { \"id\": \"101\", \"name\": \"Build a house\", \"description\": \"We need to live under a roof.\", \"progressPercent\":55, \"tags\": [{ \"name\": \"cost\", \"color\": \"red\" }] }\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": " (copy)",
+          "headers": [],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "taskId",
+              "value": "-1",
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false
+        },
+        {
+          "uuid": "3587301f-5981-435f-96a1-3364b37f972a",
+          "body": "{\n  \"id\": \"999\",\n  \"name\": \"Newly created task\",\n  \"description\": \"It was created just now\",\n  \"createdAt\": \"2021-12-29T13:46:49Z\",\n  \"progressPercent\": 0,\n  \"subtaskCount\": 2,\n  \"priority\": \"high\",\n  \"tags\": [{ \"name\": \"cost\", \"color\": \"red\" }, { \"name\": \"quality of living\", \"color\": \"green\" }],\n  \"supertasks\": [\n     { \"id\": \"1\", \"name\": \"Build a graden\", \"description\": \"Make sure to follow the best practices\", \"progressPercent\": 50, \"tags\": [{ \"name\": \"cost\", \"color\": \"red\" }] }, \n     { \"id\": \"-1\", \"name\": \"Arrange my new home\", \"description\": \"Lots of things to do!\", \"progressPercent\": 50, \"tags\": [{ \"name\": \"cost\", \"color\": \"red\" }] }, \n     { \"id\": \"-2\", \"name\": \"Be happy\", \"description\": \"Everything that would make me happy.\", \"progressPercent\": 80, \"tags\": [{ \"name\": \"cost\", \"color\": \"red\" }] }\n  ],\n  \"subtasks\": []\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": " (copy) (copy)",
+          "headers": [],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "taskId",
+              "value": "999",
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false
+        }
+      ],
+      "enabled": true,
+      "randomResponse": false,
+      "sequentialResponse": false
+    },
+    {
+      "uuid": "a064e6bd-8198-440b-8098-78f238f81038",
+      "documentation": "Find tasks",
+      "method": "get",
+      "endpoint": "tasks",
+      "responses": [
+        {
+          "uuid": "31801fd5-af99-4e4e-adb4-4ec24af50407",
+          "body": "{\n  \"content\": [\n    {\n      \"id\": \"999\",\n      \"name\": \"Newly created task\",\n      \"description\": \"It was created just now\"\n    },\n    {\n      \"id\": \"-2\",\n      \"name\": \"Be happy\",\n      \"description\": \"Everything that would make me happy.\"\n    },\n    {\n      \"id\": \"-1\",\n      \"name\": \"Arrange my new home\",\n      \"description\": \"Lots of things to do!\"\n    },\n    {\n      \"id\": \"0\",\n      \"name\": \"Build a garden\",\n      \"description\": \"Make sure to follow the best practices.\"\n    }\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false
+        }
+      ],
+      "enabled": true,
+      "randomResponse": false,
+      "sequentialResponse": false
+    },
+    {
+      "uuid": "1f75fe99-f68d-4725-a461-2e57ca6f1b0e",
+      "documentation": "Find tags",
+      "method": "get",
+      "endpoint": "tags",
+      "responses": [
+        {
+          "uuid": "83eaa953-1ef8-4746-bc7b-46cdabe765d0",
+          "body": "{\n  \"content\": [\n    { \"name\": \"cost\", \"color\": \"red\" },\n    { \"name\": \"facility\", \"color\": \"blue\" },\n    { \"name\": \"expensive\", \"color\": \"green\" },\n    { \"name\": \"nice-to-have\", \"color\": \"red\" },\n    { \"name\": \"reconsider\", \"color\": \"red\" }\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false
+        }
+      ],
+      "enabled": true,
+      "randomResponse": false,
+      "sequentialResponse": false
+    },
+    {
+      "uuid": "f41954a9-523c-46e8-8430-5aa5f706249a",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "tasks",
+      "responses": [
+        {
+          "uuid": "1e7087dd-7911-4751-939f-9c360b6fbbea",
+          "body": "{\n  \"id\": \"999\",\n  \"name\": \"Newly created task\",\n  \"description\": \"It was created just now\",\n  \"createdAt\": \"2021-12-29T13:46:49Z\",\n  \"progressPercent\": 0,\n  \"subtaskCount\": 2,\n  \"priority\": \"high\",\n  \"tags\": [{ \"name\": \"cost\", \"color\": \"red\" }, { \"name\": \"quality of living\", \"color\": \"green\" }],\n  \"supertasks\": [\n     { \"id\": \"-1\", \"name\": \"Arrange my new home\", \"description\": \"Lots of things to do!\", \"progressPercent\": 50, \"tags\": [{ \"name\": \"cost\", \"color\": \"red\" }] }, \n     { \"id\": \"-2\", \"name\": \"Be happy\", \"description\": \"Everything that would make me happy.\", \"progressPercent\": 80, \"tags\": [{ \"name\": \"cost\", \"color\": \"red\" }] }\n  ],\n  \"subtasks\": [\n    { \"id\": \"9991\", \"name\": \"Plant a tree\", \"description\": \"It would be nice to see it grow\", \"progressPercent\":30, \"tags\": [{ \"name\": \"cost\", \"color\": \"red\" }] },  \n    { \"id\": \"9992\", \"name\": \"Build a pond\", \"description\": \"Some fish would be nice too\",  \"tags\": [{ \"name\": \"conception\", \"color\": \"yellow\" }] }\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false
+        }
+      ],
+      "enabled": true,
+      "randomResponse": false,
+      "sequentialResponse": false
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ]
+}

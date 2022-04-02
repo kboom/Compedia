@@ -1,0 +1,16 @@
+{
+  ".react-fc": {
+    "scope": "typescriptreact",
+    "prefix": "typescript-react-fc",
+    "body": [
+      "import { FunctionComponent } from \"react\"",
+      "",
+      "export type ${1}Props = Readonly<{}>;",
+      "",
+      "export const ${1}: FunctionComponent<${1}Props> = (props) => {",
+      "return $0",
+      "};"
+    ],
+    "description": "Log output to console"
+  }
+}

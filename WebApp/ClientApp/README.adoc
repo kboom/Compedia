@@ -1,0 +1,9 @@
+== Used tooling
+
+* link:https://mockoon.com/[Mockoon], for mocking API
+
+== Reading
+
+* link:https://datatracker.ietf.org/doc/html/rfc7519.html#page-7[JWT RFC Specification]
+* link:https://keytool.online/[Keytool Online for quick keys generation and verification]
+* link:https://inthiraj1994.medium.com/signature-verification-using-jwks-endpoint-in-wso2-identity-server-5ba65c5de086[Meaning of JWKs in JWT]

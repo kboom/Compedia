@@ -1,0 +1,11 @@
+﻿$task-colors: (#168daa, #dd6e42, #d6d6b1, #a13d63, #9e4441);
+
+@for $i from 1 through length($task-colors) {
+  $c: nth($task-colors, $i);
+
+  .is-color-#{$i} {
+    .box {
+      background-color: $c;
+    }
+  }
+}
