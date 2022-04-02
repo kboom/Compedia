@@ -33,7 +33,7 @@ const ToastElement = (
 oidcGetInitialLoginState().then((oidcState) => {
 	const initialState: RootState = (window as any)?.initialReduxState;
 	const { store, persistor } = createStore(
-		Object.assign(initialState, oidcState)
+		Object.assign({}, initialState, oidcState)
 	);
 	configureToken(store);
 

@@ -20,9 +20,9 @@ const rootPersistConfig = {
 	whitelist: [],
 };
 
-const store = (initialState?: RootState): ConfiguredStore => {
-	const oidcMiddleware = createOidcMiddleware(oidcImplicitSettings);
+const oidcMiddleware = createOidcMiddleware(oidcImplicitSettings);
 
+const store = (initialState?: RootState): ConfiguredStore => {
 	const composeEnhancer: typeof compose =
 		(window as any)?.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
