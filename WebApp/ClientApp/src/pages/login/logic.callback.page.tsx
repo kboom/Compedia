@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useCallback } from "react";
+import { FunctionComponent, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { PageLinks } from "src/config";

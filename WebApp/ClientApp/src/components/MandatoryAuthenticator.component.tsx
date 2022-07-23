@@ -1,15 +1,10 @@
 ﻿import { Fragment, FunctionComponent } from "react";
-import { useDispatch } from "react-redux";
 import { useLocation, Navigate } from "react-router-dom";
 import { useSelectedState } from "../hooks";
-import {
-  isAccountStatus,
-  hasNoTokenButUnknownStatus,
-} from "../store/account/account.selectors";
-import { AccountStatusEnum, accountActionCreators } from "src/store/account";
+import { isSignedIn } from "src/store/oidc/oidc.selectors";
 
 interface MandatoryAuthenticatorProps {
-  children?: React.ReactNode;
+	children?: React.ReactNode;
 }
 
 /**
@@ -17,23 +12,14 @@ interface MandatoryAuthenticatorProps {
  * This stops the user from whatever he intends to do, so a loader is shown in their place.
  */
 export const MandatoryAuthenticator: FunctionComponent<
-  MandatoryAuthenticatorProps
+	MandatoryAuthenticatorProps
 > = ({ children }) => {
-  const isSignedIn = useSelectedState(
-    isAccountStatus(AccountStatusEnum.SIGNED_IN)
-  );
-  const canSignInAutomatically = useSelectedState(hasNoTokenButUnknownStatus);
-  const location = useLocation();
-  const dispatch = useDispatch();
+	const signedIn = useSelectedState(isSignedIn());
+	const location = useLocation();
 
-  if (isSignedIn) {
-    return <Fragment>{children}</Fragment>;
-  } else {
-    if (canSignInAutomatically) {
-      dispatch(accountActionCreators.tryLoginFromRefresh());
-      return <div>Signing you in</div>;
-    }
-
-    return <Navigate to="/login" replace state={{ path: location.pathname }} />;
-  }
+	if (signedIn) {
+		return <Fragment>{children}</Fragment>;
+	} else {
+		return <Navigate to="/login" replace state={{ path: location.pathname }} />;
+	}
 };

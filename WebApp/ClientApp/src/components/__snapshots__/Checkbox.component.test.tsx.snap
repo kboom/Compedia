@@ -1,5 +1,73 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`with [object Object] 1`] = `
+<label
+  className="sc-gsnTZi gnfzvj"
+>
+  <input
+    checked={true}
+    className="sc-dkzDqf gSETJl"
+    onChange={[Function]}
+    readOnly={true}
+    type="checkbox"
+  />
+  <i
+    className="sc-hKMtZM dREUOg"
+  />
+</label>
+`;
+
+exports[`with [object Object] 2`] = `
+<label
+  className="sc-gsnTZi gnfzvj"
+>
+  <input
+    checked={true}
+    className="sc-dkzDqf gSETJl"
+    onChange={[Function]}
+    readOnly={false}
+    type="checkbox"
+  />
+  <i
+    className="sc-hKMtZM dREUOg"
+  />
+</label>
+`;
+
+exports[`with [object Object] 3`] = `
+<label
+  className="sc-gsnTZi gnfzvj"
+>
+  <input
+    checked={false}
+    className="sc-dkzDqf gSETJl"
+    onChange={[Function]}
+    readOnly={true}
+    type="checkbox"
+  />
+  <i
+    className="sc-hKMtZM dREUOg"
+  />
+</label>
+`;
+
+exports[`with [object Object] 4`] = `
+<label
+  className="sc-gsnTZi gnfzvj"
+>
+  <input
+    checked={false}
+    className="sc-dkzDqf gSETJl"
+    onChange={[Function]}
+    readOnly={false}
+    type="checkbox"
+  />
+  <i
+    className="sc-hKMtZM dREUOg"
+  />
+</label>
+`;
+
 exports[`with { checked: false, readOnly: false } 1`] = `
 <label
   className="sc-gsDKAQ hHlMTP"

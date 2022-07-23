@@ -6,5 +6,8 @@
         "**/node_modules": true,
         "docker-compose.dcproj.user": true,
         ".vs": true
-    }
+    },
+    "cSpell.words": [
+        "Oidc"
+    ]
 }
