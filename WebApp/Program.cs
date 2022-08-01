@@ -1,7 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
-using System.Net;
 using Compedia.WebApp;
-using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 
 var builder = WebApplication.CreateBuilder(args);
 
