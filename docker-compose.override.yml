@@ -12,11 +12,11 @@ services:
       - "ConnectionStrings__DefaultConnection=Server=identity-db;Database=IdentityDb;User=sa;Password=Your_password123;MultipleActiveResultSets=true"
       - "ConnectionStrings__ConfigurationDbConnection=Server=identity-db;Database=ConfigurationDb;User=sa;Password=Your_password123;MultipleActiveResultSets=true"
       - "ConnectionStrings__PersistedGrantDbConnection=Server=identity-db;Database=PersistedGrantDb;User=sa;Password=Your_password123;MultipleActiveResultSets=true"
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
-      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/identity.compedia.local.pfx
+      - Persistence:SeedData=true
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:9443
-      - Persistence:SeedData=true
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/identity.compedia.local.pfx
     ports:
       - "5443:9443"
     volumes:
